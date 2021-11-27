@@ -27,20 +27,22 @@
 </head>
 <body>
 
+{% for i in data_list %}
 <div style="height: 466px; width: 400px; border: solid 1px black; margin: 50px">
     <div style="display: flex; flex-direction: row; align-items: center; ">
         <div class="box">
+            <!-- 프로필 사진 이미지 들어가는곳 -->
             <img style="width: 100%; height: 100%"
-                 src="https://contents.sixshop.com/uploadedFiles/56785/blogPost/image_1606197480517.png">
+                 src="{{ i.profile_image }}">
         </div>
         <div>
-            moonpower
+            {{ i.nickname }}
         </div>
     </div>
     <!-- 여기에 피드 이미지 들어가는 곳 -->
     <div>
         <img style="width: 100%; height: 100%"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Jeju_Island.jpg/1200px-Jeju_Island.jpg">
+             src="{{ i.image }}">
     </div>
     {#    여기가 아이콘     #}
     <div style="display: flex; flex-direction: row">
@@ -50,7 +52,7 @@
         <div><span class="material-icons-outlined">bookmark_border</span></div>
     </div>
     <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
-    <div><b> moonpower </b> 제주도 가고싶다.</div>
+    <div><b> {{ i.nickname }} </b> {{ i.content }}</div>
     <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
     <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
     <div style="display: flex; flex-direction: row;">
@@ -62,226 +64,7 @@
         </div>
     </div>
 </div>
-<div style="height: 466px; width: 400px; border: solid 1px black; margin: 50px">
-    <div style="display: flex; flex-direction: row; align-items: center; ">
-        <div class="box">
-            <img style="width: 100%; height: 100%"
-                 src="https://contents.sixshop.com/uploadedFiles/56785/blogPost/image_1606197480517.png">
-        </div>
-        <div>
-            moonpower
-        </div>
-    </div>
-    <!-- 여기에 피드 이미지 들어가는 곳 -->
-    <div>
-        <img style="width: 100%; height: 100%"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Jeju_Island.jpg/1200px-Jeju_Island.jpg">
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <div> <span class="material-icons-two-tone">
-favorite_border
-</span></div>
-        <div> <span class="material-icons-two-tone">
-comment
-</span></div>
-        <div> <span class="material-icons-two-tone">
-send
-</span></div>
-        <div>
-            <span class="material-icons-outlined">
-bookmark_border
-</span>
-        </div>
-    </div>
-    <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
-    <div><b> moonpower </b> 제주도 가고싶다.</div>
-    <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
-    <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
-    <div style="display: flex; flex-direction: row;">
-        <div class="mb-3" style="width: 350px">
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-        </div>
-        <div>
-            게시
-        </div>
-    </div>
-</div>
-<div style="height: 466px; width: 400px; border: solid 1px black; margin: 50px">
-    <div style="display: flex; flex-direction: row; align-items: center; ">
-        <div class="box">
-            <img style="width: 100%; height: 100%"
-                 src="https://contents.sixshop.com/uploadedFiles/56785/blogPost/image_1606197480517.png">
-        </div>
-        <div>
-            moonpower
-        </div>
-    </div>
-    <!-- 여기에 피드 이미지 들어가는 곳 -->
-    <div>
-        <img style="width: 100%; height: 100%"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Jeju_Island.jpg/1200px-Jeju_Island.jpg">
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <div> <span class="material-icons-two-tone">
-favorite_border
-</span></div>
-        <div> <span class="material-icons-two-tone">
-comment
-</span></div>
-        <div> <span class="material-icons-two-tone">
-send
-</span></div>
-        <div>
-            <span class="material-icons-outlined">
-bookmark_border
-</span>
-        </div>
-    </div>
-    <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
-    <div><b> moonpower </b> 제주도 가고싶다.</div>
-    <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
-    <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
-    <div style="display: flex; flex-direction: row;">
-        <div class="mb-3" style="width: 350px">
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-        </div>
-        <div>
-            게시
-        </div>
-    </div>
-</div>
-<div style="height: 466px; width: 400px; border: solid 1px black; margin: 50px">
-    <div style="display: flex; flex-direction: row; align-items: center; ">
-        <div class="box">
-            <img style="width: 100%; height: 100%"
-                 src="https://contents.sixshop.com/uploadedFiles/56785/blogPost/image_1606197480517.png">
-        </div>
-        <div>
-            moonpower
-        </div>
-    </div>
-    <!-- 여기에 피드 이미지 들어가는 곳 -->
-    <div>
-        <img style="width: 100%; height: 100%"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Jeju_Island.jpg/1200px-Jeju_Island.jpg">
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <div> <span class="material-icons-two-tone">
-favorite_border
-</span></div>
-        <div> <span class="material-icons-two-tone">
-comment
-</span></div>
-        <div> <span class="material-icons-two-tone">
-send
-</span></div>
-        <div>
-            <span class="material-icons-outlined">
-bookmark_border
-</span>
-        </div>
-    </div>
-    <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
-    <div><b> moonpower </b> 제주도 가고싶다.</div>
-    <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
-    <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
-    <div style="display: flex; flex-direction: row;">
-        <div class="mb-3" style="width: 350px">
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-        </div>
-        <div>
-            게시
-        </div>
-    </div>
-</div>
-<div style="height: 466px; width: 400px; border: solid 1px black; margin: 50px">
-    <div style="display: flex; flex-direction: row; align-items: center; ">
-        <div class="box">
-            <img style="width: 100%; height: 100%"
-                 src="https://contents.sixshop.com/uploadedFiles/56785/blogPost/image_1606197480517.png">
-        </div>
-        <div>
-            moonpower
-        </div>
-    </div>
-    <!-- 여기에 피드 이미지 들어가는 곳 -->
-    <div>
-        <img style="width: 100%; height: 100%"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Jeju_Island.jpg/1200px-Jeju_Island.jpg">
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <div> <span class="material-icons-two-tone">
-favorite_border
-</span></div>
-        <div> <span class="material-icons-two-tone">
-comment
-</span></div>
-        <div> <span class="material-icons-two-tone">
-send
-</span></div>
-        <div>
-            <span class="material-icons-outlined">
-bookmark_border
-</span>
-        </div>
-    </div>
-    <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
-    <div><b> moonpower </b> 제주도 가고싶다.</div>
-    <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
-    <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
-    <div style="display: flex; flex-direction: row;">
-        <div class="mb-3" style="width: 350px">
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-        </div>
-        <div>
-            게시
-        </div>
-    </div>
-</div>
-<div style="height: 466px; width: 400px; border: solid 1px black; margin: 50px">
-    <div style="display: flex; flex-direction: row; align-items: center; ">
-        <div class="box">
-            <img style="width: 100%; height: 100%"
-                 src="https://contents.sixshop.com/uploadedFiles/56785/blogPost/image_1606197480517.png">
-        </div>
-        <div>
-            moonpower
-        </div>
-    </div>
-    <!-- 여기에 피드 이미지 들어가는 곳 -->
-    <div>
-        <img style="width: 100%; height: 100%"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Jeju_Island.jpg/1200px-Jeju_Island.jpg">
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <div> <span class="material-icons-two-tone">
-favorite_border
-</span></div>
-        <div> <span class="material-icons-two-tone">
-comment
-</span></div>
-        <div> <span class="material-icons-two-tone">
-send
-</span></div>
-        <div>
-            <span class="material-icons-outlined">
-bookmark_border
-</span>
-        </div>
-    </div>
-    <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
-    <div><b> moonpower </b> 제주도 가고싶다.</div>
-    <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
-    <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
-    <div style="display: flex; flex-direction: row;">
-        <div class="mb-3" style="width: 350px">
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-        </div>
-        <div>
-            게시
-        </div>
-    </div>
-</div>
+{% endfor %}
 
 
 <!-- Optional JavaScript; choose one of the two! -->
