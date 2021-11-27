@@ -7,4 +7,4 @@ from content.models import Feed
 class Main(APIView):
     def get(self, request):
 
-        return render(request, 'learningspoons/main.html')
+        return render(request, 'learningspoons/main.html', context=dict(data_list=Feed.objects.all()))
