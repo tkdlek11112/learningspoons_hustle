@@ -24,7 +24,7 @@ from learningspoons.views import Main
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', Main.as_view()),
-    path('content/test', Test.as_view())
+    path('test', Test.as_view())
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
