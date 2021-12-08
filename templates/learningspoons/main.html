@@ -30,10 +30,28 @@
 
 </head>
 <body>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    피드생성
-</button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; width: 100%" >
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">Navbar</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div>
+            <span class="material-icons">home</span>
+            <span class="material-icons">send</span>
+            <span class="material-icons-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer">add_box</span>
+            <span class="material-icons-outlined">explore</span>
+            <span class="material-icons-outlined">favorite_border</span>
+        </div>
+
+    </div>
+</nav>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,7 +67,8 @@
                 </div>
                 <div style="width: 50%; height: 300px">
                     <div class="mb-3">
-                        <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1" style="height: 300px">dfdfsdfsdfs</textarea>
+                        <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1"
+                                  style="height: 300px">dfdfsdfsdfs</textarea>
                     </div>
                 </div>
             </div>
@@ -61,40 +80,9 @@
     </div>
 </div>
 
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">피드 생성하기</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="display: flex;flex-direction: row">
-                <div id="image_upload" style="background-color: indianred; width: 50%; height: 300px">
-                    사진
-                </div>
-                <div style="background-color: cornflowerblue; width: 50%; height: 300px">
-                    <textarea class="form-control" id="input_content" style="height: 100%"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="feed_upload_button" type="button" class="btn btn-primary">피드 등록하기</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<div style="display: flex;flex-direction: column; align-items: center">
 {% for i in data_list %}
-    <div style=" width: 400px; border: solid 1px black; margin: 50px">
+    <div style=" width: 400px; border: solid 1px black;margin-bottom: 50px">
         <div style="display: flex; flex-direction: row; align-items: center; ">
             <div class="box">
                 <!-- 프로필 사진 이미지 들어가는곳 -->
@@ -131,10 +119,16 @@
         </div>
     </div>
 {% endfor %}
-
+</div>
 
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
+
+    $('#button_move').click(function () {
+        location.href = 'http://127.0.0.1:8000/join/';
+    });
+
+
     $('#button_save_change').click(function () {
         console.log('버튼 클릭했습니다.');
         const content = $('#input_content').val(); // 글내용
@@ -144,7 +138,7 @@
         let fd = new FormData();
 
         // 만약 파일을 올리지 않았으면 끝내라.
-        if(files == null)
+        if (files == null)
             return
 
         fd.append('file', files[0]);
@@ -161,6 +155,7 @@
             contentType: false,
             success: function (data) {
                 console.log("성공");
+                location.href = 'http://127.0.0.1:8000/main/'
             },
             error: function (request, status, error) {
                 console.log("에러");

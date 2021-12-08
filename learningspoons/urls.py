@@ -20,13 +20,14 @@ from django.urls import path
 from content.views import Test
 from learningspoons import settings
 from learningspoons.views import Main
-from user.views import Join
+from user.views import Join, Login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', Main.as_view()),
     path('test', Test.as_view()),
-    path('join/', Join.as_view())
+    path('join/', Join.as_view()),
+    path('login/', Login.as_view())
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
