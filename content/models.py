@@ -7,3 +7,9 @@ class Feed(models.Model):
     image = models.TextField()
     profile_image = models.TextField()
     nickname = models.TextField()
+
+
+class Reply(models.Model):
+    feed_id = models.IntegerField()
+    nickname = models.TextField()
+    content = models.TextField()

@@ -41,6 +41,10 @@ class Login(APIView):
             # find_user.password = DB 테이블에 저장된 비밀번호
             if find_user.password == input_password:  # == 같으면 True, 틀리면 False
                 # 비밀번호가 맞은경우 = 로그인 성공
+
+                request.session['email'] = find_user.email
+                request.session['login_check'] = True
+
                 return Response(status=200, data=dict(message="로그인 성공"))
 
             else:
