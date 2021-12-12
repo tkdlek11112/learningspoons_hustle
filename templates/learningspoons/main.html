@@ -131,14 +131,15 @@
             </div>
             <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
             <div><b> {{ i.nickname }} </b> {{ i.content }}</div>
-            <div style="font-size: 12px"><b> aaaaaaa </b> 댓글내용</div>
-            <div style="font-size: 12px"><b> bbbbbbb </b> 댓글내용</div>
+
+            {% for j in i.reply_list %}
+                <div style="font-size: 12px"><b> {{ j.nickname }} </b> {{ j.content }}</div>
+            {% endfor %}
+
             <div style="display: flex; flex-direction: row;">
-                <div class="mb-3" style="width: 350px">
+                <div class="mb-3" style="display: flex; flex-direction:row; width: 100%">
                     <input id="input_reply" type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-                </div>
-                <div class="write_reply">
-                    게시
+                    <span class="write_reply" feed_id="{{ i.id }}" style="width: 40px"> 게시 </span>
                 </div>
             </div>
         </div>
@@ -148,18 +149,35 @@
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
 
-    $('.abc').click(function (){
-        alert('댓글쓰기를 눌렀습니다.');
-        const content = $('#input_content').val(); // 글내용
+    $('.write_reply').click(function (){
+        alert( $(this).attr('feed_id') );
+
+        const content = $(this).prev().val(); // 글내용
+        const nickname = "{{ user_info.nickname }}"; // 닉네임
+        const feed_id = $(this).attr('feed_id'); // 피드아이디
 
         $.ajax({
-            url: ,
+            url: "http://127.0.0.1:8000/reply/",
+            method: "POST",
             data: {
-                feed_id:,
-                content:,
-                nickname:,
+                content: content,
+                nickname: nickname,
+                feed_id: feed_id
+            },
+            success: function (data) {
+                console.log("성공");
+                alert("댓글 쓰기 성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+                alert("댓글 쓰기 실패");
+            },
+            complete: function () {
+                console.log("무조건실행");
             }
-        })
+        });
+
+
     });
 
     $('#button_move').click(function () {

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed
+from content.models import Feed, Reply
 from learningspoons.settings import MEDIA_ROOT
 
 
@@ -34,7 +34,6 @@ class Test(APIView):
 
 
 class CreateReply(APIView):
-
     def post(self, request):
         print("POST 요청이 들어옴")
 
@@ -44,13 +43,4 @@ class CreateReply(APIView):
 
         Reply.objects.create(content=content, feed_id=feed_id, nickname=nickname)
 
-        return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))
-
-
-class Find(APIView):
-    def post(self, request):
-        number = request.data.get('number')  # 인풋에서 글 내용 가져오기
-
-        배송조회.objects.fillter(number=number)
-
-        return
+        return Response(status=200, data=dict(message="댓글 쓰기 성공"))
