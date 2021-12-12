@@ -13,3 +13,11 @@ class Reply(models.Model):
     feed_id = models.IntegerField()
     nickname = models.TextField()
     content = models.TextField()
+
+
+class Like(models.Model):
+    feed_id = models.IntegerField()
+    email = models.TextField()
+
+    class Meta:
+        unique_together = ('feed_id', 'email',)

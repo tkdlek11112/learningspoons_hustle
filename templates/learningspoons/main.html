@@ -124,7 +124,7 @@
             </div>
             {#    여기가 아이콘     #}
             <div style="display: flex; flex-direction: row">
-                <div><span class="material-icons-two-tone">favorite_border</span></div>
+                <div ><span class="favorite material-icons" style="color: red">favorite</span></div>
                 <div><span class="material-icons-two-tone">comment</span></div>
                 <div><span class="material-icons-two-tone">send</span></div>
                 <div><span class="material-icons-outlined">bookmark_border</span></div>
@@ -132,14 +132,17 @@
             <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
             <div><b> {{ i.nickname }} </b> {{ i.content }}</div>
 
+            <div> <!--this.parent.parent.prev.append-->
             {% for j in i.reply_list %}
                 <div style="font-size: 12px"><b> {{ j.nickname }} </b> {{ j.content }}</div>
             {% endfor %}
+            </div>
 
-            <div style="display: flex; flex-direction: row;">
-                <div class="mb-3" style="display: flex; flex-direction:row; width: 100%">
+
+            <div style="display: flex; flex-direction: row;"> <!--this.parent.parent-->
+                <div class="mb-3" style="display: flex; flex-direction:row; width: 100%"> <!--this.parent-->
                     <input id="input_reply" type="email" class="form-control" id="exampleFormControlInput1" placeholder="댓글입력">
-                    <span class="write_reply" feed_id="{{ i.id }}" style="width: 40px"> 게시 </span>
+                    <span class="write_reply" feed_id="{{ i.id }}" style="width: 40px"> 게시 </span> <!--얘가 시작점 this-->
                 </div>
             </div>
         </div>
@@ -148,6 +151,18 @@
 
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
+
+    $('.favorite').click(function (){
+        // 내가 지금 favorite or favorite_border일까?
+        if($(this).html() == 'favorite_border')
+        {
+            $(this).html('favorite')
+        }
+        else{
+            $(this).html('favorite_border')
+        }
+    });
+
 
     $('.write_reply').click(function (){
         alert( $(this).attr('feed_id') );
@@ -177,6 +192,8 @@
             }
         });
 
+        $(this).parent().parent().prev().append('<div style="font-size: 12px"><b>' + nickname + '</b> ' + content + '</div>')
+        $(this).prev().val("");
 
     });
 
