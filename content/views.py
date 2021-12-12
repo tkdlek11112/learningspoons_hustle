@@ -5,7 +5,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply
+from content.models import Feed, Reply, Like
 from learningspoons.settings import MEDIA_ROOT
 
 
@@ -44,3 +44,30 @@ class CreateReply(APIView):
         Reply.objects.create(content=content, feed_id=feed_id, nickname=nickname)
 
         return Response(status=200, data=dict(message="댓글 쓰기 성공"))
+
+
+class CreateLike(APIView):
+    def post(self, request):
+        print("POST 요청이 들어옴")
+
+        feed_id = request.data.get('feed_id')  # 인풋에서 글 내용 가져오기
+        email = request.data.get('email')  # 인풋에서 닉네임 가져오기
+
+        Like.objects.create(feed_id=feed_id, email=email)
+
+        return Response(status=200, data=dict(message="좋아요 성공"))
+
+
+class CancelLike(APIView):
+    def post(self, request):
+        print("POST 요청이 들어옴")
+
+        feed_id = request.data.get('feed_id')  # 인풋에서 글 내용 가져오기
+        email = request.data.get('email')  # 인풋에서 닉네임 가져오기
+
+        find_like = Like.objects.filter(feed_id=feed_id, email=email).first()
+        # 좋아요1
+
+        find_like.delete()
+
+        return Response(status=200, data=dict(message="좋아요취소 성공"))

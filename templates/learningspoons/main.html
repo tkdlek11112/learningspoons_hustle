@@ -124,10 +124,14 @@
             </div>
             {#    여기가 아이콘     #}
             <div style="display: flex; flex-direction: row">
-                <div ><span class="favorite material-icons" style="color: red">favorite</span></div>
+                <div><span class="favorite material-icons" feed_id="{{ i.id }}" style="color: red">{% if i.is_like %}
+                    favorite
+                {% else %}
+                    favorite_border
+                {% endif %}</span></div>
                 <div><span class="material-icons-two-tone">comment</span></div>
                 <div><span class="material-icons-two-tone">send</span></div>
-                <div><span class="material-icons-outlined">bookmark_border</span></div>
+                <div><span class="bookmark material-icons-outlined">bookmark_border</span></div>
             </div>
             <div style="font-size: 12px"> AAA 외 39명이 좋아합니다.</div>
             <div><b> {{ i.nickname }} </b> {{ i.content }}</div>
@@ -154,12 +158,71 @@
 
     $('.favorite').click(function (){
         // 내가 지금 favorite or favorite_border일까?
-        if($(this).html() == 'favorite_border')
+
+        const email = '{{ user_info.email }}';
+        const feed_id = $(this).attr('feed_id');
+
+        if($.trim($(this).html()) == 'favorite_border')
         {
+            // 테두리만 있는 하트 -> 색칠된 하트로 변할때 => 내가 좋아요 누름
             $(this).html('favorite')
+
+            $.ajax({
+            url: "http://127.0.0.1:8000/like/",
+            method: "POST",
+            data: {
+                email: email,
+                feed_id: feed_id
+            },
+            success: function (data) {
+                console.log("성공");
+                alert("좋아요 성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+                alert("좋아요 실패");
+            },
+            complete: function () {
+                console.log("무조건실행");
+            }
+        });
+
         }
         else{
+            // 색칠된 하트 -> 테두리만 있는 하트로 변함 => 내가 좋아요 취소
             $(this).html('favorite_border')
+
+            $.ajax({
+            url: "http://127.0.0.1:8000/cancellike/",
+            method: "POST",
+            data: {
+                email: email,
+                feed_id: feed_id
+            },
+            success: function (data) {
+                console.log("성공");
+                alert("좋아요취소 성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+                alert("좋아요취소 실패");
+            },
+            complete: function () {
+                console.log("무조건실행");
+            }
+        });
+
+        }
+    });
+
+    $('.bookmark').click(function (){
+        // 내가 지금 favorite or favorite_border일까?
+        if($.trim($(this).html()) == 'bookmark_border')
+        {
+            $(this).html('bookmark')
+        }
+        else{
+            $(this).html('bookmark_border')
         }
     });
 
@@ -281,9 +344,6 @@
             })
         }
     }
-
-    kakaologin(clinck)
-
 
 </script>
 

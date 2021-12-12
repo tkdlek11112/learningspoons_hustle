@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from content.views import Test, CreateReply
+from content.views import Test, CreateReply, CreateLike, CancelLike
 from learningspoons import settings
 from learningspoons.views import Main
 from user.views import Join, Login
@@ -28,7 +28,9 @@ urlpatterns = [
     path('test', Test.as_view()),
     path('join/', Join.as_view()),
     path('login/', Login.as_view()),
-    path('reply/', CreateReply.as_view())
+    path('reply/', CreateReply.as_view()),
+    path('like/', CreateLike.as_view()),
+    path('cancellike/', CancelLike.as_view())
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

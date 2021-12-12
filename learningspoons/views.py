@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply
+from content.models import Feed, Reply, Like
 from user.models import User
 
 
@@ -20,7 +20,8 @@ class Main(APIView):
                                       profile_image=feed.profile_image,
                                       nickname=feed.nickname,
                                       content=feed.content,
-                                      reply_list=Reply.objects.filter(feed_id=feed.id)  # [댓글 1, 댓글2 .... ]
+                                      is_like=Like.objects.filter(email=email, feed_id=feed.id).exists(),
+                                      reply_list=Reply.objects.filter(feed_id=feed.id)  # [댓글 1, 댓글 2 .... ]
                                       )
                                  )
 
