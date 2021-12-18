@@ -8,3 +8,11 @@ class User(models.Model):
     nickname = models.TextField()
     name = models.TextField()
     profile_image = models.TextField()
+
+
+class Moonkyujin(models.Model):
+    email = models.TextField(unique=True)
+    password = models.TextField()
+    nickname = models.TextField()
+    name = models.TextField()
+    profile_image = models.TextField()
