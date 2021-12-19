@@ -10,9 +10,11 @@ class User(models.Model):
     profile_image = models.TextField()
 
 
-class Moonkyujin(models.Model):
+class Doridos(models.Model):
     email = models.TextField(unique=True)
     password = models.TextField()
     nickname = models.TextField()
     name = models.TextField()
     profile_image = models.TextField()
+
+# 아무말쓰기
