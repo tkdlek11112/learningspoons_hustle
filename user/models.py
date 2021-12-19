@@ -17,3 +17,4 @@ class Sohee(models.Model):
     name = models.TextField()
     profile_image = models.TextField()
 # 테스트 주석 추가합니다!
+# 주석 한번 더 추가
