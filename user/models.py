@@ -10,9 +10,10 @@ class User(models.Model):
     profile_image = models.TextField()
 
 
-class Moonkyujin(models.Model):
+class Sohee(models.Model):
     email = models.TextField(unique=True)
     password = models.TextField()
     nickname = models.TextField()
     name = models.TextField()
     profile_image = models.TextField()
+# 테스트 주석 추가합니다!
