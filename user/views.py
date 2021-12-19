@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from user.models import User
 
-
+# 테스트
 class Join(APIView):
     def get(self, request):
         return render(request, 'user/join.html')
