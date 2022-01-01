@@ -82,7 +82,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">피드 만들기</h5>
+                <h5 class="modal-title" id="exampleModalLabel">상품 올리기</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="display: flex; flex-direction: row">
@@ -92,7 +92,8 @@
                 <div style="width: 50%; height: 300px">
                     <div class="mb-3">
                         <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1"
-                                  style="height: 300px">dfdfsdfsdfs</textarea>
+                                  style="height: 200px"></textarea>
+                        <input id="input_price" type="number" class="form-control" placeholder="0">
                     </div>
                 </div>
             </div>
@@ -266,11 +267,9 @@
 
 
     $('#button_save_change').click(function () {
-        console.log('버튼 클릭했습니다.');
-        const content = $('#input_content').val(); // 글내용
-        const nickname = "{{ user_info.nickname }}";
-        const profile_image = "{{ user_info.profile_image }}";
-
+        const description = $('#input_content').val(); // 상품설명
+        const seller = "{{ user_info.nickname }}"; // 셀러
+        const price = $('#input_price').val();; // 가격
         let fd = new FormData();
 
         // 만약 파일을 올리지 않았으면 끝내라.
@@ -278,20 +277,20 @@
             return
 
         fd.append('file', files[0]);
-        fd.append('content', content);
-        fd.append('profile_image', profile_image);
-        fd.append('nickname', nickname);
-
+        fd.append('description', description);
+        fd.append('seller', seller);
+        fd.append('price', price);
+        fd.append('csrfmiddlewaretoken', "{{ csrf_token }}")  // 403 에러 방지
 
         $.ajax({
-            url: "{% url 'test' %}",
+            url: "{% url 'createproduct' %}",
             method: "POST",
             data: fd,
             processData: false,
             contentType: false,
             success: function (data) {
                 console.log("성공");
-                location.href = 'http://127.0.0.1:8000/main/'
+                location.href = '{% url 'main' %}'
             },
             error: function (request, status, error) {
                 console.log("에러");

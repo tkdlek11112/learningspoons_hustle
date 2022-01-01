@@ -2,10 +2,12 @@ import os
 from uuid import uuid4
 
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like
+from content.models import Feed, Reply, Like, Product
 from learningspoons.settings import MEDIA_ROOT
 
 
@@ -71,3 +73,21 @@ class CancelLike(APIView):
         find_like.delete()
 
         return Response(status=200, data=dict(message="좋아요취소 성공"))
+
+
+class CreateProduct(APIView):
+    def post(self, request):
+        file = request.FILES['file']  # 인풋에서 파일 가져오기
+        seller = request.data.get('seller')  # 인풋에서 글 내용 가져오기
+        description = request.data.get('description')  # 인풋에서 프로필 이미지 가져오기
+        price = request.data.get('price')  # 인풋에서 닉네임 가져오기
+
+        uuid_name = uuid4().hex
+        save_path = os.path.join(MEDIA_ROOT, uuid_name)
+        with open(save_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+        Product.objects.create(description=description, image=uuid_name, seller=seller, price=price)
+
+        return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))
