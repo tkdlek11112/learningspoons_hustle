@@ -59,8 +59,8 @@ class Login(APIView):
 
 class KakaoLogin(APIView):
     def get(self, request):
-        app_rest_api_key = '1746262f9558a484e46e7c3cf0884a45'
-        redirect_uri = "http://localhost:8000/kakao/callback/"
+        app_rest_api_key = '957ed2afa5eff369f7e405795df71fcd'
+        redirect_uri = "http://127.0.0.1:8000/kakao/oauth"
         return redirect(
             f"https://kauth.kakao.com/oauth/authorize?client_id={app_rest_api_key}&redirect_uri={redirect_uri}&response_type=code"
         )
@@ -68,29 +68,42 @@ class KakaoLogin(APIView):
 
 class KakaoCallBack(APIView):
     def get(self, request):
-        app_rest_api_key = '1746262f9558a484e46e7c3cf0884a45'
-        redirect_uri = "http://localhost:8000/kakao/callback/"
+        # 카카오 개발자 홈페이지의 REST KEY
+        app_rest_api_key = '957ed2afa5eff369f7e405795df71fcd'
+        # 카카오 개발자 홈페이지의 리다이렉트 URL
+        redirect_uri = "http://127.0.0.1:8000/kakao/oauth"
+
+        # 카카오 로그인에 호출 성공하면 인가코드를 넘겨준다.
         user_token = request.GET.get("code")
-        # post request
+
+        # 인가코드를 이용해 토큰을 발급받는다
         token_request = requests.get(
             f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={app_rest_api_key}&redirect_uri={redirect_uri}&code={user_token}"
         )
 
+        # 위에 api를 날리고 나서 응답으로 access_token이 온다. 이 토큰을 이용해 회원 정보를 조회한다.
         token_response_json = token_request.json()
         access_token = token_response_json.get("access_token")
+
+        # kapi/kakao.com/v2/user/me 를 통해서 내정보를 조회한다. 동의한 것만 내려온다.
         profile_request = requests.get(
             "https://kapi.kakao.com/v2/user/me",
             headers={"Authorization": f"Bearer {access_token}"},
         )
         profile_json = profile_request.json()
+
+        # 어떻게 오는지 한번 print로 찍어본다.
         print(profile_json)
-        # parsing profile json
+
+        # 고유 id와 닉네임을 저장한다.
         id = profile_json.get("id")
         properties = profile_json.get("properties")
         nickname = properties.get('nickname')
+
+        # 넘어온 고유 id가 회원가입 되어있는지 검사한다.
         user_in_db = User.objects.filter(email=id).first()
         if user_in_db is None:
-            # 화원가입
+            # 만약 없다면 화원가입 (User테이블에 데이터 생성)
             user_in_db = User.objects.create(email=id, password=id, nickname=nickname, name=nickname, profile_image='')
 
         # 로그인
