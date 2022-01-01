@@ -24,7 +24,7 @@ from user.views import Join, Login, KakaoLogin, KakaoCallBack
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', Main.as_view()),
+    path('', Main.as_view()),
     path('test', Test.as_view(), name='test'),
     path('join/', Join.as_view()),
     path('login/', Login.as_view()),
