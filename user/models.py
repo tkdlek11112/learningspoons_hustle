@@ -17,4 +17,3 @@ class Learningspoons(models.Model):
     name = models.TextField()
     profile_image = models.TextField()
 
-# 주석 추가합니다~~~.
