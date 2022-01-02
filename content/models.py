@@ -21,3 +21,9 @@ class Like(models.Model):
 
     class Meta:
         unique_together = ('feed_id', 'email',)
+
+class Product(models.Model):
+    image = models.TextField()
+    seller = models.TextField()
+    description = models.TextField()
+    price = models.IntegerField()

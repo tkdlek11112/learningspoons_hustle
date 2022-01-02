@@ -59,7 +59,7 @@ class Login(APIView):
 
 class KakaoLogin(APIView):
     def get(self, request):
-        app_rest_api_key = '957ed2afa5eff369f7e405795df71fcd'
+        app_rest_api_key = '3b60ea6ed77a28f4060286048c7c740b'
         redirect_uri = "http://127.0.0.1:8000/kakao/oauth"
         return redirect(
             f"https://kauth.kakao.com/oauth/authorize?client_id={app_rest_api_key}&redirect_uri={redirect_uri}&response_type=code"
@@ -69,7 +69,7 @@ class KakaoLogin(APIView):
 class KakaoCallBack(APIView):
     def get(self, request):
         # 카카오 개발자 홈페이지의 REST KEY
-        app_rest_api_key = '957ed2afa5eff369f7e405795df71fcd'
+        app_rest_api_key = '3b60ea6ed77a28f4060286048c7c740b'
         # 카카오 개발자 홈페이지의 리다이렉트 URL
         redirect_uri = "http://127.0.0.1:8000/kakao/oauth"
 
