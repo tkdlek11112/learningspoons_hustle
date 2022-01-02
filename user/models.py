@@ -10,7 +10,7 @@ class User(models.Model):
     profile_image = models.TextField()
 
 
-class Doridos(models.Model):
+class Learningspoons(models.Model):
     email = models.TextField(unique=True)
     password = models.TextField()
     nickname = models.TextField()

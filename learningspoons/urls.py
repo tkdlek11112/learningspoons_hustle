@@ -20,17 +20,19 @@ from django.urls import path
 from content.views import Test, CreateReply, CreateLike, CancelLike
 from learningspoons import settings
 from learningspoons.views import Main
-from user.views import Join, Login
+from user.views import Join, Login, KakaoLogin, KakaoCallBack
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', Main.as_view()),
-    path('test', Test.as_view()),
+    path('test', Test.as_view(), name='test'),
     path('join/', Join.as_view()),
     path('login/', Login.as_view()),
     path('reply/', CreateReply.as_view()),
     path('like/', CreateLike.as_view()),
-    path('cancellike/', CancelLike.as_view())
+    path('cancellike/', CancelLike.as_view()),
+    path('kakaologin/', KakaoLogin.as_view()),
+    path('kakao/oauth', KakaoCallBack.as_view())
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
