@@ -17,4 +17,4 @@ class Doridos(models.Model):
     name = models.TextField()
     profile_image = models.TextField()
 
-# 아무말쓰기
+# 아무말 테스트 입력
