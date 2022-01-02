@@ -64,7 +64,7 @@
         console.log(password);
 
         $.ajax({
-            url: "http://127.0.0.1:8000/join/",
+            url: "{% url 'join' %}",
             method: "POST",
             data: {
                 email: email,
@@ -75,7 +75,7 @@
             success: function (data) {
                 console.log("성공");
                 alert("회원가입 성공");
-                location.href = 'http://127.0.0.1:8000/login/'
+                location.href = "{% url 'login' %}"
             },
             error: function (request, status, error) {
                 console.log("에러");

@@ -48,7 +48,7 @@
         console.log(password);
 
         $.ajax({
-            url: "http://127.0.0.1:8000/login/",
+            url: "{% url 'login' %}",
             method: "POST",
             data: {
                 email: email,

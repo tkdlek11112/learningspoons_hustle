@@ -139,7 +139,7 @@
             $(this).html('favorite')
 
             $.ajax({
-            url: "http://127.0.0.1:8000/like/",
+            url: "{% url 'like' %}",
             method: "POST",
             data: {
                 email: email,
@@ -164,7 +164,7 @@
             $(this).html('favorite_border')
 
             $.ajax({
-            url: "http://127.0.0.1:8000/cancellike/",
+            url: "{% url 'cancellike' %}",
             method: "POST",
             data: {
                 email: email,
@@ -206,7 +206,7 @@
         const feed_id = $(this).attr('feed_id'); // 피드아이디
 
         $.ajax({
-            url: "http://127.0.0.1:8000/reply/",
+            url: "{% url 'reply' %}",
             method: "POST",
             data: {
                 content: content,
@@ -232,7 +232,7 @@
     });
 
     $('#button_move').click(function () {
-        location.href = 'http://127.0.0.1:8000/join/';
+        location.href = "{% url 'join' %}";
     });
 
 

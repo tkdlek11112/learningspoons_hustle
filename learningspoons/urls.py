@@ -29,11 +29,11 @@ urlpatterns = [
     path('test', Test.as_view(), name='test'),
     path('join/', Join.as_view(), name='join'),
     path('login/', Login.as_view(), name='login'),
-    path('reply/', CreateReply.as_view()),
-    path('like/', CreateLike.as_view()),
-    path('cancellike/', CancelLike.as_view()),
-    path('kakaologin/', KakaoLogin.as_view()),
-    path('kakao/oauth', KakaoCallBack.as_view()),
+    path('reply/', CreateReply.as_view(), name='reply'),
+    path('like/', CreateLike.as_view(), name='like'),
+    path('cancellike/', CancelLike.as_view(), name='cancellike'),
+    path('kakaologin/', KakaoLogin.as_view(), name='kakaologin'),
+    path('kakao/oauth', KakaoCallBack.as_view(), name='oauth'),
     path('createproduct/', CreateProduct.as_view(), name='createproduct')
 ]
 
