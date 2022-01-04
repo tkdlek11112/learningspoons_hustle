@@ -15,7 +15,7 @@
     <title>Hello, world!</title>
 </head>
 <body>
-<div style="text-align: center;border: solid 1px black;width: 300px;height: 500px">
+<div style="text-align: center;border: solid 1px black;width: 300px;">
     <!-- 여기서부터 내용 -->
     <div><img style="width: 200px; height: 100px"
               src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"></div>
@@ -45,6 +45,7 @@
         </div>
     </div>
     <div> <button id="button_join" type="button" class="btn btn-primary">회원가입</button></div>
+    <div style="margin: 10px 0px"> <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">로그인</button></a></div>
     <!-- 여기까지 내용 끝-->
 </div>
 
@@ -63,7 +64,7 @@
         console.log(password);
 
         $.ajax({
-            url: "http://127.0.0.1:8000/join/",
+            url: "{% url 'join' %}",
             method: "POST",
             data: {
                 email: email,
@@ -74,7 +75,7 @@
             success: function (data) {
                 console.log("성공");
                 alert("회원가입 성공");
-                location.href = 'http://127.0.0.1:8000/login/'
+                location.href = "{% url 'login' %}"
             },
             error: function (request, status, error) {
                 console.log("에러");

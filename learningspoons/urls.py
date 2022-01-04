@@ -17,22 +17,24 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from content.views import Test, CreateReply, CreateLike, CancelLike
+from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct
 from learningspoons import settings
 from learningspoons.views import Main
 from user.views import Join, Login, KakaoLogin, KakaoCallBack
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', Main.as_view()),
+    # path('main/', Main.as_view()),
+    path('', Main.as_view(), name='main'),
     path('test', Test.as_view(), name='test'),
-    path('join/', Join.as_view()),
-    path('login/', Login.as_view()),
-    path('reply/', CreateReply.as_view()),
-    path('like/', CreateLike.as_view()),
-    path('cancellike/', CancelLike.as_view()),
-    path('kakaologin/', KakaoLogin.as_view()),
-    path('kakao/oauth', KakaoCallBack.as_view())
+    path('join/', Join.as_view(), name='join'),
+    path('login/', Login.as_view(), name='login'),
+    path('reply/', CreateReply.as_view(), name='reply'),
+    path('like/', CreateLike.as_view(), name='like'),
+    path('cancellike/', CancelLike.as_view(), name='cancellike'),
+    path('kakaologin/', KakaoLogin.as_view(), name='kakaologin'),
+    path('kakao/oauth', KakaoCallBack.as_view(), name='oauth'),
+    path('createproduct/', CreateProduct.as_view(), name='createproduct')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
