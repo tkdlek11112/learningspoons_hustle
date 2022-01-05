@@ -91,3 +91,11 @@ class CreateProduct(APIView):
         Product.objects.create(description=description, image=uuid_name, seller=seller, price=price)
 
         return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))
+
+
+class ProductDetail(APIView):
+    def get(self, request, pk):
+        product = Product.objects.get(id=pk)
+        return render(request, 'content/productdetail.html', context=dict(product=product))
+
+

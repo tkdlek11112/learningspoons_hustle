@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- 요거는 구글 머티리얼 아이콘을 쓰기위한 링크 -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; width: 100%">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/">Hustle SHOP</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div style="display: flex; flex-direction: row">
+            <span class="material-icons">home</span>
+            <span class="material-icons">send</span>
+            <span class="material-icons-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  style="cursor: pointer">add_box</span>
+            <span class="material-icons-outlined">explore</span>
+            <span class="material-icons-outlined">favorite_border</span>
+            <div style="width: 25px;height: 25px;border-radius: 70%;overflow: hidden;">
+                <!-- 프로필 사진 이미지 들어가는곳 -->
+                <img style="width: 100%; height: 100%"
+                     src="{{ user_info.profile_image }}">
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+
+<div style="display: flex; flex-direction: row; padding-top: 50px">
+    <div style="width: 50%; height: 50%; margin:50px">
+        <img style="width: 100%; height: 100%" src="{% get_media_prefix %}{{ product.image }}">
+    </div>
+    <div style="width: 50%; height: 50%; margin: 50px">
+        <hr>
+        <div style="font-size: 36px">
+            {{ product.description }}
+        </div>
+        <hr>
+        <div>
+            <span style="margin-right: 100px;font-size: 24px"> 판매가 </span>
+            <span style="font-size: 36px; color: red"> {{ product.price }} 원</span>
+        </div>
+        <hr>
+        <div>
+            <span style="margin-right: 80px;font-size: 24px"> 배송방법 </span>
+            <span style="font-size: 20px"> 택배 </span>
+        </div>
+        <hr>
+        <div>
+            <span style="margin-right: 100px;font-size: 24px"> 배송비 </span>
+            <span style="font-size: 20px"> 무료</span>
+        </div>
+        <hr>
+        <div>
+            <button type="button" class="btn btn-dark"> 바로 구매하기</button>
+            <button type="button" class="btn btn-secondary"> 장바구니 담기</button>
+            <button type="button" class="btn btn-secondary"> 관심상품등록</button>
+        </div>
+        <div style="margin-top: 100px;">
+            <button type="button" class="btn btn-warning" style="width: 100%">카카오톡 공유하기</button>
+        </div>
+        <div style="margin-top: 5px">
+            <button type="button" class="btn btn-success" style="width: 100%">네이버 공유하기</button>
+        </div>
+    </div>
+</div>
+
+<hr>
+<div style="margin-left: 40px; font-size: 26px">
+    사용자 리뷰
+</div>
+
+<!-- 리뷰 카드 -->
+<div style="display: flex; flex-direction: row; margin: 40px">
+    <!-- 카드 1 -->
+    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
+        {% for i in "x"|rjust:"5" %}
+            <span class="material-icons-outlined" style="color: red">star</span>
+        {% endfor %}
+        <div style="margin-top: 30px">
+            배송이 빨라요!
+        </div>
+    </div>
+
+    <!-- 카드 2 -->
+    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
+        {% for i in "x"|rjust:"3" %}
+            <span class="material-icons-outlined" style="color: red">star</span>
+        {% endfor %}
+        <div style="margin-top: 30px">
+            생각보다 별로에요
+        </div>
+    </div>
+
+    <!-- 카드 3 -->
+    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
+        {% for i in "x"|rjust:"5" %}
+            <span class="material-icons-outlined" style="color: red">star</span>
+        {% endfor %}
+        <div style="margin-top: 30px">
+            친구가 추천해줘서 샀어요 강추추추!
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+</body>
+</html>
