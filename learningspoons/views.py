@@ -19,3 +19,19 @@ class Main(APIView):
         else:
             return render(request, 'user/login.html')
 
+
+class Search(APIView):
+    def post(self, request):
+        if request.session.get('login_check'):
+            email = request.session.get('email')
+            find_user = User.objects.filter(email=email).first()
+            keyword = request.data.get('keyword')
+
+            return render(request, 'learningspoons/main.html',
+                          context=dict(
+                              data_list=Product.objects.filter(description__contains=keyword).order_by('-id'),
+                              user_info=find_user
+                          ))
+        else:
+            return render(request, 'user/login.html')
+

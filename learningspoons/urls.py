@@ -19,13 +19,14 @@ from django.urls import path
 
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail
 from learningspoons import settings
-from learningspoons.views import Main
+from learningspoons.views import Main, Search
 from user.views import Join, Login, KakaoLogin, KakaoCallBack
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('main/', Main.as_view()),
     path('', Main.as_view(), name='main'),
+    path('search/', Search.as_view(), name='search'),
     path('test', Test.as_view(), name='test'),
     path('join/', Join.as_view(), name='join'),
     path('login/', Login.as_view(), name='login'),
