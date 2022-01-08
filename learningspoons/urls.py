@@ -17,7 +17,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail
+from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
+    PayCart, ClearCart
 from learningspoons import settings
 from learningspoons.views import Main, Search
 from user.views import Join, Login, KakaoLogin, KakaoCallBack
@@ -36,7 +37,11 @@ urlpatterns = [
     path('kakaologin/', KakaoLogin.as_view(), name='kakaologin'),
     path('kakao/oauth', KakaoCallBack.as_view(), name='oauth'),
     path('createproduct/', CreateProduct.as_view(), name='createproduct'),
-    path('product/<int:pk>/', ProductDetail.as_view(), name='product')
+    path('product/<int:pk>/', ProductDetail.as_view(), name='product'),
+    path('addcart/', AddCart.as_view(), name='addcart'),
+    path('cart/', CartView.as_view(), name='cart'),
+    path('paycart/', PayCart.as_view(), name='pay_cart'),
+    path('clearcart/', ClearCart.as_view(), name='clear_cart'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

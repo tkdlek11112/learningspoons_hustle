@@ -28,3 +28,12 @@ class Product(models.Model):
     seller = models.TextField()
     description = models.TextField()
     price = models.IntegerField()
+
+
+class Cart(models.Model):
+    email = models.TextField()
+    product_id = models.IntegerField()
+    count = models.IntegerField()
+
+    class Meta:
+        unique_together = ('email', 'product_id')
