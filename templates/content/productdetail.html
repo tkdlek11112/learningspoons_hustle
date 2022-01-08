@@ -21,6 +21,11 @@
     <!-- 카카오 API -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
+    <meta property="og:title" content="{{ product.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% get_media_prefix %}{{ product.image }}">
+    <meta property="og:description" content="{{ product.description }}">
+
     <title>상품 상세정보</title>
 </head>
 <body>
