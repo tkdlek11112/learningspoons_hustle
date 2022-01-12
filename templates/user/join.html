@@ -44,6 +44,12 @@
             <label for="floatingInput">비밀번호</label>
         </div>
     </div>
+    <div>
+        <div class="form-floating mb-3">
+            <input id="input_address" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">주소</label>
+        </div>
+    </div>
     <div> <button id="button_join" type="button" class="btn btn-primary">회원가입</button></div>
     <div style="margin: 10px 0px"> <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">로그인</button></a></div>
     <!-- 여기까지 내용 끝-->
@@ -51,17 +57,21 @@
 
 <!-- 자바스크립트(jquery) 쓰는곳 -->
 <script>
+
+
     $('#button_join').click(function () {
         console.log('버튼 클릭했습니다.');
         const email = $('#input_email').val()
         const name = $('#input_name').val()
         const nickname = $('#input_nickname').val()
         const password = $('#input_password').val()
+        const address = $('#input_address').val()
 
         console.log(email);
         console.log(name);
         console.log(nickname);
         console.log(password);
+        console.log(address);
 
         $.ajax({
             url: "{% url 'join' %}",
@@ -70,7 +80,8 @@
                 email: email,
                 name: name,
                 nickname: nickname,
-                password: password
+                password: password,
+                address: address,
             },
             success: function (data) {
                 console.log("성공");
