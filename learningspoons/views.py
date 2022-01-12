@@ -20,7 +20,7 @@ class Main(APIView):
                               last_view_product_list=last_view_product_list
                           ))
         else:
-            return render(request, 'user/login.html')
+            return render(request, 'learningspoons/main2.html')
 
 
 class Search(APIView):

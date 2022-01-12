@@ -72,7 +72,7 @@
             </form>
         </div>
         <div style="display: flex; flex-direction: row">
-            <span class="material-icons-outlined" style="cursor: pointer" id="logout">logout</span>
+            <a href="{% url 'login' %}"><span class="material-icons-outlined">login</span></a>
             <span class="material-icons">home</span>
             <span class="material-icons">send</span>
             <span class="material-icons-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -139,18 +139,6 @@
 
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
-    $('#logout').click(function () {
-        $.ajax({
-            url: "{% url 'logout' %}",
-            method: "POST",
-            success: function () {
-                alert("로그아웃 되었습니다.")
-            },
-            error: function () {
-                alert("로그아웃에 실패했습니다.")
-        }
-        })
-    })
 
     $('.favorite').click(function () {
         // 내가 지금 favorite or favorite_border일까?

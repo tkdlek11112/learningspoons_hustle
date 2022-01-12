@@ -56,6 +56,10 @@ class Login(APIView):
             # 회원정보를 못찾았어
             return Response(status=404, data=dict(message="회원정보가 없습니다."))
 
+class Logout(APIView):
+    def post(self, request):
+        request.session.flush()
+        return Response(status=200)
 
 class KakaoLogin(APIView):
     def get(self, request):
