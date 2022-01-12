@@ -11,6 +11,8 @@ class User(models.Model):
     address = models.TextField(blank=True, null=True)
 
 
+
+
 class Learningspoons(models.Model):
     email = models.TextField(unique=True)
     password = models.TextField()
