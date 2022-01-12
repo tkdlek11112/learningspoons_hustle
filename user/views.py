@@ -17,11 +17,13 @@ class Join(APIView):
         nickname = request.data.get('nickname')  # 인풋에서 닉네임 가져오기
         password = request.data.get('password')  # 인풋에서 비밀번호 가져오기
         profile_image = ''
+        address = request.data.get('address')
         User.objects.create(email=email,
                             name=name,
                             nickname=nickname,
                             password=password,
-                            profile_image=profile_image)
+                            profile_image=profile_image,
+                            address=address)
 
         return Response(status=200, data=dict(message="회원가입에 성공했습니다."))
 
@@ -56,6 +58,10 @@ class Login(APIView):
             # 회원정보를 못찾았어
             return Response(status=404, data=dict(message="회원정보가 없습니다."))
 
+class Logout(APIView):
+    def post(self, request):
+        request.session.flush()
+        return Response(status=200)
 
 class KakaoLogin(APIView):
     def get(self, request):

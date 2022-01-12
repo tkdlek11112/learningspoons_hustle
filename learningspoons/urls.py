@@ -21,7 +21,7 @@ from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProdu
     PayCart, ClearCart
 from learningspoons import settings
 from learningspoons.views import Main, Search
-from user.views import Join, Login, KakaoLogin, KakaoCallBack
+from user.views import Join, Login, KakaoLogin, KakaoCallBack, Logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,6 +42,7 @@ urlpatterns = [
     path('cart/', CartView.as_view(), name='cart'),
     path('paycart/', PayCart.as_view(), name='pay_cart'),
     path('clearcart/', ClearCart.as_view(), name='clear_cart'),
+    path('logout/', Logout.as_view(), name='logout'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,6 +8,7 @@ class User(models.Model):
     nickname = models.TextField()
     name = models.TextField()
     profile_image = models.TextField()
+    address = models.TextField(blank=True, null=True)
 
 
 class Learningspoons(models.Model):
