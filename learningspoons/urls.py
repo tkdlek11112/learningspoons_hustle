@@ -42,7 +42,7 @@ urlpatterns = [
     path('cart/', CartView.as_view(), name='cart'),
     path('paycart/', PayCart.as_view(), name='pay_cart'),
     path('clearcart/', ClearCart.as_view(), name='clear_cart'),
-    path('logout/', Logout.as_view(), name='logout'),
+    path('log_out/', Logout.as_view(), name='logout'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
