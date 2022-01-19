@@ -170,7 +170,8 @@ class CreateReview(APIView):
         review = request.data.get('review')
         nickname = request.data.get('nickname')
         product_id = request.data.get('product_id')
+        star = request.data.get('star')
 
-        ProductReview.objects.create(review=review, nickname=nickname,product_id=product_id)
+        ProductReview.objects.create(review=review, nickname=nickname,product_id=product_id,star=star)
 
         return Response(status=200)
