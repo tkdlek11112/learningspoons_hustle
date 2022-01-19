@@ -37,3 +37,7 @@ class Cart(models.Model):
 
     class Meta:
         unique_together = ('email', 'product_id')
+
+class Review(models.Model):
+    review = models.TextField()
+    nickname = models.TextField()
