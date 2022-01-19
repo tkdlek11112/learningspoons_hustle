@@ -8,9 +8,13 @@ class User(models.Model):
     nickname = models.TextField()
     name = models.TextField()
     profile_image = models.TextField()
+
+
+class Address(models.Model):
+
+    email = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField(blank=True, null=True)
-
-
+    primary_address = models.BooleanField(default=False)
 
 
 class Learningspoons(models.Model):

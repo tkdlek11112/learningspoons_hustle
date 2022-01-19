@@ -2,7 +2,8 @@ import requests
 from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from user.models import User
+from user.models import User, Address
+
 
 # 테스트
 class Join(APIView):
@@ -23,8 +24,8 @@ class Join(APIView):
                             nickname=nickname,
                             password=password,
                             profile_image=profile_image,
-                            address=address)
-
+                            )
+        Address.objects.create(email=email,address=address )
         return Response(status=200, data=dict(message="회원가입에 성공했습니다."))
 
 
@@ -118,3 +119,25 @@ class KakaoCallBack(APIView):
         request.session['login_check'] = True
         return render(request, 'learningspoons/main.html')
 
+class AddressView(APIView):
+    def get(self, request):
+
+
+
+        email = request.session.get('email')  # 세션에서 email값 가져오기
+        user_in_db = User.objects.filter(email=email).first()
+        address_list = Address.objects.filter(email=user_in_db)  # 로그인한 사용자의 장바구니 아이템 전부 가져오기
+
+        return render(request, 'user/address.html', context=dict(email=email,address_list=address_list))
+
+
+class AddAddress(APIView):
+    def post(self, request):
+        email = request.session.get('email')  # 인풋에서 이메일 가져오기
+
+        address = request.data.get('address')
+
+        print(email)
+        user_in_db = User.objects.filter(email=email).first()
+        Address.objects.create(email=user_in_db,address=address )
+        return Response(status=200, data=dict(message="주소 추가에 성공했습니다."))
