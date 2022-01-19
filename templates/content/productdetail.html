@@ -170,8 +170,9 @@
             url: "{% url 'review' %}",
             method: "POST",
             data: {
-                reviw: review,
+                review: review,
                 nickname: nickname,
+                product_id: {{ product.id }}
             },
             success: function (data) {
                 console.log("성공");
@@ -183,6 +184,7 @@
             },
             complete: function () {
                 console.log("무조건실행");
+                location.href = "{% url 'main' %}"
             }
         });
     })
