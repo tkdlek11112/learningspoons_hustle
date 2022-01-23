@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
-    <!-- Required meta tags -->
+    <!-- Required meta tags -->py
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -118,7 +118,7 @@
         <div>
             <button type="button" class="btn btn-dark"> 바로 구매하기</button>
             <button id="add_cart" type="button" class="btn btn-secondary"> 장바구니 담기</button>
-            <button type="button" class="btn btn-secondary"> 관심상품등록</button>
+            <button id="add_favorite" type="button" class="btn btn-secondary"> 관심상품등록</button>
         </div>
         <div style="margin-top: 100px;">
             <button id="kakao_share" type="button" class="btn btn-warning" style="width: 100%">카카오톡 공유하기</button>
@@ -290,6 +290,22 @@
                 },
                 error: function (request, status, error) {
                     alert('장바구니에 추가 실패')
+                }
+            })
+        })
+
+    $('#add_favorite').click(function () {
+            $.ajax({
+                url: {% url 'favoriteproducts' %},
+                method: 'POST',
+                data: {
+                    product_id: {{ product.id }}
+                },
+                success: function (data) {
+                    alert('관심상품에 추가되었습니다.')
+                },
+                error: function (request, status, error) {
+                    alert('관심상품에 추가 실패')
                 }
             })
         })

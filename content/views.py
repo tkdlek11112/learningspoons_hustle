@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview
+from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview, FavoriteProducts
 from learningspoons.settings import MEDIA_ROOT
 from user.models import User
 
@@ -173,5 +173,14 @@ class CreateReview(APIView):
         star = request.data.get('star')
 
         ProductReview.objects.create(review=review, nickname=nickname,product_id=product_id,star=star)
+
+        return Response(status=200)
+
+class Favoriteproducts(APIView):
+    def post(self, request):
+        product_id = request.data.get('product_id')
+        email = request.session.get('email')  # 세션에서 email값 가져오기
+
+        FavoriteProducts.objects.create(product_id=product_id, email=email)
 
         return Response(status=200)
