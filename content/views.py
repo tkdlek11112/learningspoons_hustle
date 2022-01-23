@@ -7,8 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like, Product, Cart
+from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview
 from learningspoons.settings import MEDIA_ROOT
+from user.models import User
 
 
 class Test(APIView):
@@ -95,13 +96,17 @@ class CreateProduct(APIView):
 
 class ProductDetail(APIView):
     def get(self, request, pk):
+        email = request.session.get('email')
+        find_user = User.objects.filter(email=email).first()
+
         product = Product.objects.get(id=pk)
 
         last_view_list = request.session.get('last_view_list', [])  # 1. 세션에 저장된 최근 본 리스트를 불러옴
         last_view_list.append(pk)   # 2. 지금 조회한 상품의 번호를 최근 본 리스트에 추가함
         request.session['last_view_list'] = last_view_list  # 3. 최근 본 리스트를 세션에 저장 (업데이트)
 
-        return render(request, 'content/productdetail.html', context=dict(product=product))
+        return render(request, 'content/productdetail.html',
+                      context=dict(product=product, user_info=find_user))
 
 
 class AddCart(APIView):
@@ -159,3 +164,14 @@ class ClearCart(APIView):
 
         return Response(status=200)
 
+
+class CreateReview(APIView):
+    def post(self, request):
+        review = request.data.get('review')
+        nickname = request.data.get('nickname')
+        product_id = request.data.get('product_id')
+        star = request.data.get('star')
+
+        ProductReview.objects.create(review=review, nickname=nickname,product_id=product_id,star=star)
+
+        return Response(status=200)

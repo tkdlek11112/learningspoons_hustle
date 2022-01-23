@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
-    PayCart, ClearCart
+    PayCart, ClearCart, CreateReview
 from learningspoons import settings
 from learningspoons.views import Main, Search
 
@@ -46,6 +46,8 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
     path('address/', AddressView.as_view(), name='address'),
     path('addaddress/', AddAddress.as_view(), name='addaddress'),
+    path('review/', CreateReview.as_view(), name='review')
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

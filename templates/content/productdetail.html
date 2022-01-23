@@ -26,6 +26,39 @@
     <meta property="og:image" content="{% get_media_prefix %}{{ product.image }}">
     <meta property="og:description" content="{{ product.description }}">
 
+    <style>
+    .rating .rate_radio {
+        position: relative;
+        display: inline-block;
+        z-index: 20;
+        opacity: 0.001;
+        width: 40px;
+        height: 40px;
+        background-color: #fff;
+        cursor: pointer;
+        vertical-align: top;
+        display: none;
+    }
+
+    .rating .rate_radio + label {
+        position: relative;
+        display: inline-block;
+        margin-left: -4px;
+        z-index: 10;
+        width: 40px;
+        height: 40px;
+        background-image: url("{% get_media_prefix %}starrate.png");
+        background-repeat: no-repeat;
+        background-size: 40px 40px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+    }
+
+    .rating .rate_radio:checked + label {
+        background-color: red;
+    }
+    </style>
+
     <title>상품 상세정보</title>
 </head>
 <body>
@@ -99,6 +132,7 @@
 <hr>
 <div style="margin-left: 40px; font-size: 26px">
     사용자 리뷰
+    <button style="font-size: 18px" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰작성</button>
 </div>
 
 <!-- 리뷰 카드 -->
@@ -134,36 +168,131 @@
     </div>
 </div>
 
+<!-- 리뷰작성 모달 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">리뷰 올리기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1"
+                              style="height: 200px"></textarea>
+                    <div class="review_rating">
+                        <div class="warning_msg">별점을 선택해 주세요.</div>
+                        <div class="rating">
+                            <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+                            <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점">
+                            <label for="rating1"></label>
+                            <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점">
+                            <label for="rating2"></label>
+                            <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점">
+                            <label for="rating3"></label>
+                            <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
+                            <label for="rating4"></label>
+                            <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점">
+                            <label for="rating5"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="review_save_change" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Optional JavaScript; choose one of the two! -->
+
 <script>
+    //별점 마킹 모듈 프로토타입으로 생성
+    function Rating() {
+    };
+    Rating.prototype.rate = 0;
+    Rating.prototype.setRate = function (newrate) {
+        //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+        this.rate = newrate;
+        let items = document.querySelectorAll('.rate_radio');
+        items.forEach(function (item, idx) {
+            if (idx < newrate) {
+                item.checked = true;
+            } else {
+                item.checked = false;
+            }
+        });
+    }
+    let rating = new Rating();//별점 인스턴스 생성
 
-    Kakao.init('70f02b65cdfe5b557fbeb152ac398f0f');
-    Kakao.isInitialized();
-
-
-    $('#kakao_share').click(function () {
-        console.log(location.href)
-        Kakao.Link.sendScrap({
-            requestUrl: location.href
+    document.addEventListener('DOMContentLoaded', function () {
+        //별점선택 이벤트 리스너
+        document.querySelector('.rating').addEventListener('click', function (e) {
+            let elem = e.target;
+            if (elem.classList.contains('rate_radio')) {
+                rating.setRate(parseInt(elem.value));
+            }
+        })
+    });
+    <!-- 리뷰올리기 -->
+    $('#review_save_change').click(function () {
+        const review = $('#input_content').val(); // 리뷰내용
+        const nickname = "{{ user_info.nickname }}"; // 글작성자
+        const star = rating.rate
+        $.ajax({
+            url: "{% url 'review' %}",
+            method: "POST",
+            data: {
+                review: review,
+                nickname: nickname,
+                product_id: {{ product.id }},
+                star: star
+            },
+            success: function (data) {
+                console.log("성공");
+                alert("리뷰 쓰기 성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+                alert("리뷰 쓰기 실패");
+            },
+            complete: function () {
+                console.log("무조건실행");
+                location.href = "{% url 'main' %}"
+            }
         });
     })
 
+        Kakao.init('70f02b65cdfe5b557fbeb152ac398f0f');
+        Kakao.isInitialized();
 
-    $('#add_cart').click(function () {
-        $.ajax({
-            url: {% url 'addcart' %},
-            method: 'POST',
-            data: {
-                product_id: {{ product.id }}
-            },
-            success: function (data) {
-                alert('장바구니에 추가되었습니다.')
-            },
-            error: function (request, status, error) {
-                alert('장바구니에 추가 실패')
-            },
+
+        $('#kakao_share').click(function () {
+            console.log(location.href)
+            Kakao.Link.sendScrap({
+                requestUrl: location.href
+            });
         })
-    })
+
+
+        $('#add_cart').click(function () {
+            $.ajax({
+                url: {% url 'addcart' %},
+                method: 'POST',
+                data: {
+                    product_id: {{ product.id }}
+                },
+                success: function (data) {
+                    alert('장바구니에 추가되었습니다.')
+                },
+                error: function (request, status, error) {
+                    alert('장바구니에 추가 실패')
+                }
+            })
+        })
 </script>
 
 
