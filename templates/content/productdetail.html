@@ -137,35 +137,16 @@
 
 <!-- 리뷰 카드 -->
 <div style="display: flex; flex-direction: row; margin: 40px">
-    <!-- 카드 1 -->
-    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
-        {% for i in "x"|rjust:"5" %}
-            <span class="material-icons-outlined" style="color: red">star</span>
-        {% endfor %}
-        <div style="margin-top: 30px">
-            배송이 빨라요!
+    {% for r in reviews %}
+        <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
+            {% for i in "x"|rjust:r.star %}
+                <span class="material-icons-outlined" style="color: red">star</span>
+            {% endfor %}
+            <div style="margin-top: 30px">
+                {{ r.review }}
+            </div>
         </div>
-    </div>
-
-    <!-- 카드 2 -->
-    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
-        {% for i in "x"|rjust:"3" %}
-            <span class="material-icons-outlined" style="color: red">star</span>
-        {% endfor %}
-        <div style="margin-top: 30px">
-            생각보다 별로에요
-        </div>
-    </div>
-
-    <!-- 카드 3 -->
-    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
-        {% for i in "x"|rjust:"5" %}
-            <span class="material-icons-outlined" style="color: red">star</span>
-        {% endfor %}
-        <div style="margin-top: 30px">
-            친구가 추천해줘서 샀어요 강추추추!
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <!-- 리뷰작성 모달 -->
@@ -261,7 +242,7 @@
             },
             complete: function () {
                 console.log("무조건실행");
-                location.href = "{% url 'main' %}"
+                location.reload(true);
             }
         });
     })
