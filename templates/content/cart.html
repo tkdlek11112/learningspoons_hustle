@@ -15,7 +15,7 @@
             href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
             rel="stylesheet">
 
-        <!-- 요거는 jquery -->
+    <!-- 요거는 jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <title>장바구니</title>
@@ -57,26 +57,36 @@
 <hr>
 
 <div>
-        <div style="display: flex; flex-direction: row;">
-            <div style="width: 200px;text-align: center">상품 이미지</div>
-            <div style="width: 500px;text-align: center">상품정보</div>
-            <div style="width: 200px;text-align: center">가격</div>
-            <div style="width: 50px;text-align: center">수량</div>
-        </div>
-<hr>
+    <div style="display: flex; flex-direction: row;">
+        <div style="width: 200px;text-align: center">상품 이미지</div>
+        <div style="width: 500px;text-align: center">상품정보</div>
+        <div style="width: 200px;text-align: center">가격</div>
+        <div style="width: 50px;text-align: center">수량</div>
+        <div style="width: 50px;text-align: center">금액</div>
+    </div>
+    <hr>
     {% for data in data_list %}
-        <div style="display: flex; flex-direction: row;">
-            <div style="width: 200px"><img width="150px" src="{% get_media_prefix %}{{ data.product.image }}"></div>
-            <div style="width: 500px">
-                <div> {{ data.product.seller }}</div>
-                <div style="font-size: 24px"> {{ data.product.description }}</div>
-            </div>
-            <div style="width: 200px;font-size: 24px; color: red">{{ data.product.price }} 원 </div>
-            <div style="width: 50px;text-align: center">{{ data.count }}</div>
+    <div style="display: flex; flex-direction: row;">
+        <div style="width: 200px"><img width="150px" src="{% get_media_prefix %}{{ data.product.image }}"></div>
+        <div style="width: 500px">
+            <div> {{ data.product.seller }}</div>
+            <div style="font-size: 24px"> {{ data.product.description }}</div>
         </div>
-        <hr>
+        <div style="width: 200px;font-size: 24px; color: green">{{ data.product.price }} 원</div>
+        <div style="width: 50px;text-align: center">{{ data.count }}</div>
+        <div style="width: 50px;text-align: center; color: blue">{{ data.product_total_price }} 원</div>
+        <div>
+            <span id="clear_product" product_id="{{ data.product.id }}" class="material-icons-outlined" style="cursor: pointer">
+remove_circle_outline</span>
+        </div>
+    </div>
+    <hr>
     {% endfor %}
-</div>--
+    <hr>
+    <div style="width: 100%; text-align: right; font-size: 30px; color: red">결재 금액: {{ cart_total_price }}원</div>
+    <hr>
+</div>
+--
 
 <div style="padding: 30px; text-align: center">
     <button id="button_pay" type="button" class="btn btn-dark">결제하기</button>
@@ -85,6 +95,30 @@
 
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
+    $('#clear_product').click(function(){
+<!--        let confirmation = confirm("장바구니에서 삭제하시겠습니까?")-->
+<!--        if (confirmation) {-->
+<!--            let object_id = $(this).attr('-->
+<!--        }-->
+        const email = '{{ user_info.email }}';
+        const product_id = $(this).attr('product_id');
+       $.ajax({
+            url: {% url 'clear_product' %},
+            method: 'POST',
+            data: {
+                email: email,
+                product_id: product_id,
+            },
+            success: function (data) {
+                alert('해당 아이템을 삭제했습니다.')
+                location.href = '/cart/'
+            },
+            error: function (request, status, error) {
+                alert('비우기 실패')
+            },
+       })
+    });
+
     $('#button_pay').click(function (){
         $.ajax({
             url: {% url 'pay_cart' %},
@@ -112,6 +146,11 @@
             },
         })
     });
+
+
+
+
+
 
 
 </script>

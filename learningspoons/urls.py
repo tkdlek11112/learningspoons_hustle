@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
-    PayCart, ClearCart, CreateReview
+    PayCart, ClearCart, CreateReview, ClearProduct
 from learningspoons import settings
 from learningspoons.views import Main, Search
 
@@ -48,6 +48,7 @@ urlpatterns = [
     path('addaddress/', AddAddress.as_view(), name='addaddress'),
     path('review/', CreateReview.as_view(), name='review'),
     path('primaryaddress/', PrimaryAddress.as_view(), name='primaryaddress'),
+    path('clearproduct/', ClearProduct.as_view(),name='clear_product'),
 
 ]
 
