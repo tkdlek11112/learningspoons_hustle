@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview
 from learningspoons.settings import MEDIA_ROOT
-from user.models import User
+from user.models import User, Address
 
 
 class Test(APIView):
@@ -145,8 +145,10 @@ class CartView(APIView):
                 product_total_price = product.price*cart_item.count
             ))
             cart_total_price= cart_total_price + product.price*cart_item.count
+        user_in_db = User.objects.filter(email=email).first()
+        address_list = Address.objects.filter(email=user_in_db)
 
-        return render(request, 'content/cart.html', context=dict(data_list=data_list, cart_total_price=cart_total_price))
+        return render(request, 'content/cart.html', context=dict(data_list=data_list, cart_total_price=cart_total_price, address_list=address_list))
 
 
 class PayCart(APIView):

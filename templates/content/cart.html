@@ -76,7 +76,8 @@
         <div style="width: 50px;text-align: center">{{ data.count }}</div>
         <div style="width: 50px;text-align: center; color: blue">{{ data.product_total_price }} 원</div>
         <div>
-            <span id="clear_product" product_id="{{ data.product.id }}" class="material-icons-outlined" style="cursor: pointer">
+            <span id="clear_product" product_id="{{ data.product.id }}" class="material-icons-outlined"
+                  style="cursor: pointer">
 remove_circle_outline</span>
         </div>
     </div>
@@ -86,7 +87,30 @@ remove_circle_outline</span>
     <div style="width: 100%; text-align: right; font-size: 30px; color: red">결재 금액: {{ cart_total_price }}원</div>
     <hr>
 </div>
---
+<div>
+    {% for i in address_list %}
+    <div style="display: flex; flex-direction:row; justify-content: space-between; width: 400px; border: solid 1px black; margin: 10px">
+        <!-- 여기에 상품 이미지 들어가는 곳 -->
+
+        <!-- 상품 셀러 -->
+
+        <!-- 상품 설명 -->
+        <div style="margin: 5px"> 주소 {{ i.id }} : {{ i.address }}</div>
+        <div style="margin: 5px">
+
+            <div class="form-check">
+                <input address_id="{{ i.id }}" class="form-check-input primary" type="radio" name="address"{% if i.primary_address %} checked {% endif %} id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Primary
+                </label>
+            </div>
+
+        </div>
+        <!-- 상품 가격 -->
+
+    </div>
+    {% endfor %}
+</div>
 
 <div style="padding: 30px; text-align: center">
     <button id="button_pay" type="button" class="btn btn-dark">결제하기</button>
@@ -121,6 +145,8 @@ remove_circle_outline</span>
 
     $('#button_pay').click(function (){
         $.ajax({
+
+
             url: {% url 'pay_cart' %},
             method: 'POST',
             success: function (data) {
@@ -146,6 +172,7 @@ remove_circle_outline</span>
             },
         })
     });
+
 
 
 
