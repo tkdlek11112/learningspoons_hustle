@@ -80,7 +80,7 @@
             method: "POST",
             success: function () {
                 alert("로그아웃 되었습니다.")
-                location.href = "{% url 'main' %}";
+                location.reload(true);
             },
             error: function () {
                 alert("로그아웃에 실패했습니다.")
