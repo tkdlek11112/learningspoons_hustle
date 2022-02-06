@@ -20,7 +20,7 @@ from django.urls import path
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
     PayCart, ClearCart, CreateReview, AddProduct, AddProductDetail, ClearProduct, Favoriteproducts
 from learningspoons import settings
-from learningspoons.views import Main, Search
+from learningspoons.views import Main, Search, FavoriteMain
 
 from user.views import Join, Login, KakaoLogin, KakaoCallBack, Logout, AddressView, AddAddress, PrimaryAddress
 
@@ -45,6 +45,10 @@ urlpatterns = [
     path('clearcart/', ClearCart.as_view(), name='clear_cart'),
     path('logout/', Logout.as_view(), name='logout'),
     path('review/', CreateReview.as_view(), name='review'),
+    path('primaryaddress/', PrimaryAddress.as_view(), name='primaryaddress'),
+    path('clearproduct/', ClearProduct.as_view(),name='clear_product'),
+    path('favoriteproducts/',Favoriteproducts.as_view(),name='favoriteproducts'),
+    path('favoritemain/', FavoriteMain.as_view(), name='favoritemain'),
     path('addproduct/', AddProduct.as_view(), name='addproduct'),
     path('addproductdetail/', AddProductDetail.as_view(), name='addproductdetail'),
     # path('address/', AddressView.as_view(), name='address'),
@@ -52,6 +56,7 @@ urlpatterns = [
     # path('primaryaddress/', PrimaryAddress.as_view(), name='primaryaddress'),
     # path('clearproduct/', ClearProduct.as_view(),name='clear_product'),
     path('favoriteproducts/',Favoriteproducts.as_view(),name='favoriteproducts' )
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

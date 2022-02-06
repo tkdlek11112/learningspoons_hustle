@@ -101,14 +101,16 @@ class ProductDetail(APIView):
         find_user = User.objects.filter(email=email).first()
 
         product = Product.objects.get(id=pk)
-        reviews=ProductReview.objects.filter(product_id=product.id).order_by('-id')
+        reviews = ProductReview.objects.filter(product_id=product.id).order_by('-id')
 
         last_view_list = request.session.get('last_view_list', [])  # 1. 세션에 저장된 최근 본 리스트를 불러옴
         last_view_list.append(pk)   # 2. 지금 조회한 상품의 번호를 최근 본 리스트에 추가함
         request.session['last_view_list'] = last_view_list  # 3. 최근 본 리스트를 세션에 저장 (업데이트)
 
+        is_favorite = FavoriteProducts.objects.filter(email=email, product_id=pk).exists()
+
         return render(request, 'content/productdetail.html',
-                      context=dict(product=product, user_info=find_user, reviews=reviews))
+                      context=dict(product=product, user_info=find_user, reviews=reviews, is_favorite=is_favorite))
 
 
 class AddCart(APIView):
@@ -234,7 +236,8 @@ class Favoriteproducts(APIView):
     def post(self, request):
         product_id = request.data.get('product_id')
         email = request.session.get('email')  # 세션에서 email값 가져오기
-
-        FavoriteProducts.objects.create(product_id=product_id, email=email)
-
+        if FavoriteProducts.objects.filter(email=email, product_id=product_id).exists():
+            FavoriteProducts.objects.filter(email=email, product_id=product_id).delete()
+        else:
+            FavoriteProducts.objects.create(product_id=product_id, email=email)
         return Response(status=200)
