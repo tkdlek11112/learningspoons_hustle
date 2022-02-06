@@ -47,3 +47,10 @@ class ProductReview(models.Model):
     nickname = models.TextField()
     product_id = models.IntegerField()
     star = models.IntegerField(default=0)
+
+class FavoriteProducts(models.Model):
+    product_id = models.IntegerField()
+    email = models.TextField()
+
+    class Meta:
+        unique_together = ('email', 'product_id')
