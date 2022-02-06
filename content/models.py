@@ -47,3 +47,10 @@ class ProductReview(models.Model):
     nickname = models.TextField()
     product_id = models.IntegerField()
     star = models.IntegerField(default=0)
+
+class History(models.Model):
+    email = models.TextField()
+    datetime = models.DateTimeField()
+    product_id = models.IntegerField()
+    address = models.TextField()
+    count = models.IntegerField()

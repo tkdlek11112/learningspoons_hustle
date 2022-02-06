@@ -1,13 +1,14 @@
 import os
 from uuid import uuid4
 
+import datetime
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview
+from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview, History
 from learningspoons.settings import MEDIA_ROOT
 from user.models import User, Address
 
@@ -154,6 +155,24 @@ class CartView(APIView):
 class PayCart(APIView):
     def post(self, request):
         email = request.session.get('email')    # 세션에서 email값 가져오기
+        dt = datetime.datetime.now()
+
+        cart_item_list = Cart.objects.filter(email=email)   # 로그인한 사용자의 장바구니 아이템 전부 가져오기
+
+        data_list = []  # 빈 리스트 생성
+        cart_total_price = 0
+        for cart_item in cart_item_list:
+            # 사용자의 카트 아이템들을 하나씩 보면서 상품정보를 불러옴
+            product = Product.objects.get(id=cart_item.product_id)
+            History.objects.create(email=email, datetime=dt, product_id=product.id, address=address, count=cart_item.count)
+            # data_list에 하나씩 추가
+            data_list.append(dict(
+                product=product,
+                count=cart_item.count,
+                product_total_price = product.price*cart_item.count
+            ))
+            cart_total_price= cart_total_price + product.price*cart_item.count
+
 
         Cart.objects.filter(email=email).delete()   # 사용자의 카트 데이터 전체 지우기
 
