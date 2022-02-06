@@ -51,6 +51,6 @@ class ProductReview(models.Model):
 class History(models.Model):
     email = models.TextField()
     datetime = models.DateTimeField()
-    product_id = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     address = models.TextField()
     count = models.IntegerField()

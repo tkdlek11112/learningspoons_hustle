@@ -156,22 +156,16 @@ class PayCart(APIView):
     def post(self, request):
         email = request.session.get('email')    # 세션에서 email값 가져오기
         dt = datetime.datetime.now()
-
+        address = request.data.get('address')
         cart_item_list = Cart.objects.filter(email=email)   # 로그인한 사용자의 장바구니 아이템 전부 가져오기
 
-        data_list = []  # 빈 리스트 생성
-        cart_total_price = 0
+
         for cart_item in cart_item_list:
             # 사용자의 카트 아이템들을 하나씩 보면서 상품정보를 불러옴
             product = Product.objects.get(id=cart_item.product_id)
             History.objects.create(email=email, datetime=dt, product_id=product.id, address=address, count=cart_item.count)
             # data_list에 하나씩 추가
-            data_list.append(dict(
-                product=product,
-                count=cart_item.count,
-                product_total_price = product.price*cart_item.count
-            ))
-            cart_total_price= cart_total_price + product.price*cart_item.count
+
 
 
         Cart.objects.filter(email=email).delete()   # 사용자의 카트 데이터 전체 지우기
@@ -206,3 +200,24 @@ class ClearProduct(APIView):
         Cart.objects.filter(email=email, product_id=product_id).delete()
 
         return Response(status=200)
+
+class PaidHistory(APIView):
+    def get(self, request):
+        email = request.session.get('email')
+        paid_item_list = History.objects.filter(email=email)
+        # paid_item_list = 전체 결제 목록
+
+        paid_list=[]
+        paid_total_price = 0
+        for paid_item in paid_item_list:
+            # 사용자의 카트 아이템들을 하나씩 보면서 상품정보를 불러옴
+
+            # data_list에 하나씩 추가
+            paid_list.append(dict(
+                paid_item=paid_item,
+                product_total_price = paid_item.product.price*paid_item.count
+            ))
+
+
+        return render(request, 'content/history.html',
+                      context=dict(paid_list=paid_list))
