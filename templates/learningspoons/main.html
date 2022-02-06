@@ -63,34 +63,6 @@
 
 {% include 'learningspoons/navbar.html' %}
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">상품 올리기</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="display: flex; flex-direction: row">
-                <div id="image_upload" style="width: 50%; height: 300px; background-color: gray">
-                    사진올리는 곳
-                </div>
-                <div style="width: 50%; height: 300px">
-                    <div class="mb-3">
-                        <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1"
-                                  style="height: 200px"></textarea>
-                        <input id="input_price" type="number" class="form-control" placeholder="0">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="button_save_change" type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div style="display: flex;flex-direction: row; align-items: center; flex-wrap: wrap; padding-top: 100px">
     {% for i in data_list %}
         <div style=" width: 400px; border: solid 1px black; margin: 10px">
