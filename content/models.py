@@ -28,6 +28,7 @@ class Product(models.Model):
     seller = models.TextField()
     description = models.TextField()
     price = models.IntegerField()
+    name = models.TextField(default='')
 
 
 class Cart(models.Model):

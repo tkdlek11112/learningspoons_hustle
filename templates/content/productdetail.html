@@ -76,8 +76,9 @@
         <div style="display: flex; flex-direction: row">
             <span class="material-icons">home</span>
             <span class="material-icons">send</span>
-            <span class="material-icons-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                  style="cursor: pointer">add_box</span>
+{#            <span class="material-icons-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"#}
+{#                  style="cursor: pointer">add_box</span>#}
+            <a href="{% url 'addproduct' %}"><span class="material-icons-outlined" style="color: black">add_box</span></a>
             <span class="material-icons-outlined">explore</span>
             <span class="material-icons-outlined">favorite_border</span>
             <div style="width: 25px;height: 25px;border-radius: 70%;overflow: hidden;">
@@ -121,12 +122,13 @@
 <!-- 상품 소개 화면 -->
 <div style="display: flex; flex-direction: row; padding-top: 50px">
     <div style="width: 50%; height: 50%; margin:50px">
-        <img style="width: 100%; height: 100%" src="{% get_media_prefix %}{{ product.image }}">
+        <img style="width: 100%; height: 100%" src="{% get_media_prefix %}{{ product.image }}"> <br>
+        {{ product.description }}
     </div>
     <div style="width: 50%; height: 50%; margin: 50px">
         <hr>
         <div style="font-size: 36px">
-            {{ product.description }}
+            {{ product.name }}
         </div>
         <hr>
         <div>

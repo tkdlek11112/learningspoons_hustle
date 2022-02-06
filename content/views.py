@@ -180,3 +180,21 @@ class CreateReview(APIView):
 class AddProduct(APIView):
     def get(self, request):
         return render(request, 'content/addproduct.html')
+
+class AddProductDetail(APIView):
+    def post(self, request):
+        file = request.FILES['file']  # 인풋에서 파일 가져오기
+        seller = request.data.get('seller')  # 인풋에서 글 내용 가져오기
+        description = request.data.get('description')  # 인풋에서 프로필 이미지 가져오기
+        price = request.data.get('price')  # 인풋에서 닉네임 가져오기
+        name = request.data.get('name')
+
+        uuid_name = uuid4().hex
+        save_path = os.path.join(MEDIA_ROOT, uuid_name)
+        with open(save_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+        Product.objects.create(description=description, image=uuid_name, seller=seller, price=price, name=name)
+
+        return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))

@@ -82,22 +82,49 @@
 </div>
 <div style="margin: 20px">
     <hr>
-    <div>
-        product image
+    <div style="display: flex; flex-direction: row">
+        <div style="width: 30%; font-weight: bold; font-size: 20px">
+            제품이미지 등록
+        </div>
+        <div style="width: 70%">
+            <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+        </div>
     </div>
     <hr>
-    <div>
-        name
+    <div style="display: flex; flex-direction: row">
+        <div style="width: 30%; font-weight: bold; font-size: 20px">
+            상품명
+        </div>
+        <div>
+            <textarea id="input_name" class="form-control" id="exampleFormControlTextarea1"
+                      style="width: 600px"></textarea>
+        </div>
     </div>
     <hr>
-    <div>
-        description
+    <div style="display: flex; flex-direction: row">
+        <div style="width: 30%; font-weight: bold; font-size: 20px">
+            상품 상세설명
+        </div>
+        <div class="mb-3">
+            <textarea id="input_description" class="form-control" id="exampleFormControlTextarea1"
+                      style="height: 200px; width: 600px"></textarea>
+
+        </div>
     </div>
     <hr>
-    <div>
-        price
+    <div style="display: flex; flex-direction: row">
+        <div style="width: 30%; font-weight: bold; font-size: 20px">
+            가격
+        </div>
+        <div class="mb-3">
+            <input id="input_price" type="number" class="form-control" placeholder="0">
+        </div>
     </div>
     <hr>
+    <div style="text-align: center">
+        <button type="button" class="btn btn-dark" id="btn_save"> 저장 </button>
+        <button type="button" class="btn btn-secondary" id="btn_cancel"> 취소 </button>
+    </div>
 </div>
 
 
@@ -105,26 +132,12 @@
 
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
-    $('#logout').click(function () {
-        $.ajax({
-            url: "{% url 'logout' %}",
-            method: "POST",
-            success: function () {
-                alert("로그아웃 되었습니다.")
-                location.href = "{% url 'main' %}";
-            },
-            error: function () {
-                alert("로그아웃에 실패했습니다.")
-        }
-        })
-    })
-
-
-    $('#button_save_change').click(function () {
-        const description = $('#input_content').val(); // 상품설명
+    <!-- 상품올리기 -->
+    $('#btn_save').click(function () {
+        const description = $('#input_description').val(); // 상품설명
         const seller = "{{ user_info.nickname }}"; // 셀러
-        const price = $('#input_price').val();
-        ; // 가격
+        const name = $('#input_name').val(); // 상품명
+        const price = $('#input_price').val(); // 가격
         let fd = new FormData();
 
         // 만약 파일을 올리지 않았으면 끝내라.
@@ -135,10 +148,11 @@
         fd.append('description', description);
         fd.append('seller', seller);
         fd.append('price', price);
+        fd.append('name', name);
         fd.append('csrfmiddlewaretoken', "{{ csrf_token }}")  // 403 에러 방지
 
         $.ajax({
-            url: "{% url 'createproduct' %}",
+            url: "{% url 'addproductdetail' %}",
             method: "POST",
             data: fd,
             processData: false,
@@ -155,6 +169,13 @@
             }
         });
     });
+
+    let files;
+
+    function loadFile(input) {
+    files = input.files;	//선택된 파일 가져오기
+    };
+
 
     $('#image_upload')
         .on("dragover", dragOver)
@@ -178,7 +199,7 @@
         }
     };
 
-    let files;
+
 
     function drop(e) {
         e.stopPropagation();
