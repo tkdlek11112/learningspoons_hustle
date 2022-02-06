@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
-    PayCart, ClearCart, CreateReview
+    PayCart, ClearCart, CreateReview, AddProduct
 from learningspoons import settings
 from learningspoons.views import Main, Search
 from user.views import Join, Login, KakaoLogin, KakaoCallBack, Logout
@@ -43,7 +43,8 @@ urlpatterns = [
     path('paycart/', PayCart.as_view(), name='pay_cart'),
     path('clearcart/', ClearCart.as_view(), name='clear_cart'),
     path('logout/', Logout.as_view(), name='logout'),
-    path('review/', CreateReview.as_view(), name='review')
+    path('review/', CreateReview.as_view(), name='review'),
+    path('addproduct/', AddProduct.as_view(), name='addproduct')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -176,3 +176,7 @@ class CreateReview(APIView):
         ProductReview.objects.create(review=review, nickname=nickname,product_id=product_id,star=star)
 
         return Response(status=200)
+
+class AddProduct(APIView):
+    def get(self, request):
+        return render(request, 'content/addproduct.html')
