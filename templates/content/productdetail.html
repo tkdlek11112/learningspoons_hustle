@@ -188,7 +188,7 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1"
+                    <textarea id="input_review" class="form-control" id="exampleFormControlTextarea1"
                               style="height: 200px"></textarea>
                     <div class="review_rating">
                         <div class="warning_msg">별점을 선택해 주세요.</div>
@@ -249,7 +249,7 @@
     });
     <!-- 리뷰올리기 -->
     $('#review_save_change').click(function () {
-        const review = $('#input_content').val(); // 리뷰내용
+        const review = $('#input_review').val(); // 리뷰내용
         const nickname = "{{ user_info.nickname }}"; // 글작성자
         const star = rating.rate
         $.ajax({
