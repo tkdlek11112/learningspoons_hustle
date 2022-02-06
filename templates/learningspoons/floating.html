@@ -1,0 +1,38 @@
+<!-- 플로팅 -->
+{% load static %}
+<div id="floating" style="width: 200px; height: 500px; top:60px; right: 0px; position: fixed;  background-color: wheat;overflow-y:auto; overflow-x:hidden;">
+    <div> <span id='hide_arrow' class="material-icons-outlined" style="cursor: pointer">keyboard_double_arrow_right</span></div>
+    <div style="text-align: center; font-size: 16px"> 최근 본 상품 </div>
+    {% for product in last_view_product_list %}
+            <div style="padding: 10px">
+                <a href="{% url 'product' pk=product.id%}">
+                    <img style="width: 100%; height: 100%"
+                         src="{% get_media_prefix %}{{ product.image }}">
+                </a>
+            </div>
+    {% endfor %}
+</div>
+
+<div id="hide_floating" style="right: 10px; top: 60px; position: fixed;display: none;background-color: wheat;">
+        <div> <span id='open_arrow' class="material-icons-outlined" style="cursor: pointer">keyboard_double_arrow_left</span></div>
+</div>
+
+<script>
+    $('#hide_arrow').click(function (){
+        $('#floating').css({
+            display:'none'
+        });
+        $('#hide_floating').css({
+            display: 'inline'
+        })
+    });
+
+    $('#open_arrow').click(function (){
+        $('#floating').css({
+            display:'inline'
+        });
+        $('#hide_floating').css({
+            display: 'none'
+        })
+    })
+</script>
