@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
-    PayCart, ClearCart, CreateReview, ClearProduct, Favoriteproducts
+    PayCart, ClearCart, CreateReview, AddProduct, AddProductDetail, ClearProduct, Favoriteproducts
 from learningspoons import settings
 from learningspoons.views import Main, Search, FavoriteMain
 
@@ -44,14 +44,15 @@ urlpatterns = [
     path('paycart/', PayCart.as_view(), name='pay_cart'),
     path('clearcart/', ClearCart.as_view(), name='clear_cart'),
     path('logout/', Logout.as_view(), name='logout'),
-    path('address/', AddressView.as_view(), name='address'),
-    path('addaddress/', AddAddress.as_view(), name='addaddress'),
     path('review/', CreateReview.as_view(), name='review'),
     path('primaryaddress/', PrimaryAddress.as_view(), name='primaryaddress'),
     path('clearproduct/', ClearProduct.as_view(),name='clear_product'),
     path('favoriteproducts/',Favoriteproducts.as_view(),name='favoriteproducts'),
-    path('favoritemain/', FavoriteMain.as_view(), name='favoritemain')
-
+    path('favoritemain/', FavoriteMain.as_view(), name='favoritemain'),
+    path('addproduct/', AddProduct.as_view(), name='addproduct'),
+    path('addproductdetail/', AddProductDetail.as_view(), name='addproductdetail'),
+    path('address/', AddressView.as_view(), name='address'),
+    path('addaddress/', AddAddress.as_view(), name='addaddress'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
