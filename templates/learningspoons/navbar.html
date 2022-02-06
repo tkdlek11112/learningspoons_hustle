@@ -11,7 +11,11 @@
             </form>
         </div>
         <div style="display: flex; flex-direction: row">
+            {% if is_login %}
             <span class="material-icons-outlined" style="cursor: pointer" id="logout">logout</span>
+            {% else %}
+            <span class="material-icons-outlined" style="cursor: pointer" id="login">login</span>
+            {%  endif %}
             <a href="{% url 'main' %}" style="text-decoration: none; color: black"><span class="material-icons">home</span></a>
             <a href="{% url 'addproduct' %}"><span class="material-icons-outlined" style="color: black">add_box</span></a>
 

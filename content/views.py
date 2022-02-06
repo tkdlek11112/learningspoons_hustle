@@ -105,11 +105,11 @@ class ProductDetail(APIView):
         last_view_list = request.session.get('last_view_list', [])  # 1. 세션에 저장된 최근 본 리스트를 불러옴
         last_view_list.append(pk)   # 2. 지금 조회한 상품의 번호를 최근 본 리스트에 추가함
         request.session['last_view_list'] = last_view_list  # 3. 최근 본 리스트를 세션에 저장 (업데이트)
-
+        is_login = request.session.get('login_check', False)
         is_favorite = FavoriteProducts.objects.filter(email=email, product_id=pk).exists()
 
         return render(request, 'content/productdetail.html',
-                      context=dict(product=product, user_info=find_user, reviews=reviews, is_favorite=is_favorite))
+                      context=dict(product=product, user_info=find_user, reviews=reviews, is_favorite=is_favorite, is_login=is_login))
 
 
 class AddCart(APIView):

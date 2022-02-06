@@ -11,13 +11,16 @@ class Main(APIView):
             email = request.session.get('email')
             find_user = User.objects.filter(email=email).first()
 
+            # 로그인 되있으면 True, 안되있으면 False
+            is_login = request.session.get('login_check', False)
             last_view_product_list = Product.objects.filter(id__in=request.session.get('last_view_list', []))
 
             return render(request, 'learningspoons/main.html',
                           context=dict(
                               data_list=Product.objects.all().order_by('-id'),
                               user_info=find_user,
-                              last_view_product_list=last_view_product_list
+                              last_view_product_list=last_view_product_list,
+                              is_login=is_login
                           ))
         else:
             return render(request, 'learningspoons/main2.html',
