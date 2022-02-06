@@ -90,6 +90,35 @@
     </div>
 </nav>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">상품 올리기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="display: flex; flex-direction: row">
+                <div id="image_upload" style="width: 50%; height: 300px; background-color: gray">
+                    사진올리는 곳
+                </div>
+                <div style="width: 50%; height: 300px">
+                    <div class="mb-3">
+                        <textarea id="input_content" class="form-control" id="exampleFormControlTextarea1"
+                                  style="height: 200px"></textarea>
+                        <input id="input_price" type="number" class="form-control" placeholder="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="button_save_change" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- 상품 소개 화면 -->
 <div style="display: flex; flex-direction: row; padding-top: 50px">
     <div style="width: 50%; height: 50%; margin:50px">
@@ -133,44 +162,25 @@
 <hr>
 <div style="margin-left: 40px; font-size: 26px">
     사용자 리뷰
-    <button style="font-size: 18px" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰작성</button>
+    <button style="font-size: 18px" data-bs-toggle="modal" data-bs-target="#reviewModal">리뷰작성</button>
 </div>
 
 <!-- 리뷰 카드 -->
 <div style="display: flex; flex-direction: row; margin: 40px">
-    <!-- 카드 1 -->
-    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
-        {% for i in "x"|rjust:"5" %}
-            <span class="material-icons-outlined" style="color: red">star</span>
-        {% endfor %}
-        <div style="margin-top: 30px">
-            배송이 빨라요!
+    {% for r in reviews %}
+        <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
+            {% for i in "x"|rjust:r.star %}
+                <span class="material-icons-outlined" style="color: red">star</span>
+            {% endfor %}
+            <div style="margin-top: 30px">
+                {{ r.review }}
+            </div>
         </div>
-    </div>
-
-    <!-- 카드 2 -->
-    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
-        {% for i in "x"|rjust:"3" %}
-            <span class="material-icons-outlined" style="color: red">star</span>
-        {% endfor %}
-        <div style="margin-top: 30px">
-            생각보다 별로에요
-        </div>
-    </div>
-
-    <!-- 카드 3 -->
-    <div style="border: 1px solid black; width: 200px; height: 200px; padding: 10px; margin: 0px 10px">
-        {% for i in "x"|rjust:"5" %}
-            <span class="material-icons-outlined" style="color: red">star</span>
-        {% endfor %}
-        <div style="margin-top: 30px">
-            친구가 추천해줘서 샀어요 강추추추!
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <!-- 리뷰작성 모달 -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -261,7 +271,7 @@
             },
             complete: function () {
                 console.log("무조건실행");
-                location.href = "{% url 'main' %}"
+                location.reload(true);
             }
         });
     })
