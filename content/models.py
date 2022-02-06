@@ -42,11 +42,13 @@ class Review(models.Model):
     review = models.TextField()
     nickname = models.TextField()
 
+
 class ProductReview(models.Model):
     review = models.TextField()
     nickname = models.TextField()
     product_id = models.IntegerField()
     star = models.IntegerField(default=0)
+
 
 class FavoriteProducts(models.Model):
     product_id = models.IntegerField()

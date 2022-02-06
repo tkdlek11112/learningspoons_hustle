@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like, Product
+from content.models import Feed, Reply, Like, Product, FavoriteProducts
 from user.models import User
 
 
@@ -41,3 +41,20 @@ class Search(APIView):
         else:
             return render(request, 'user/login.html')
 
+
+class FavoriteMain(APIView):
+    def get(self, request):
+        if request.session.get('login_check'):
+            email = request.session.get('email')
+            find_user = User.objects.filter(email=email).first()
+
+            last_view_product_list = Product.objects.filter(id__in=request.session.get('last_view_list', []))
+
+            return render(request, 'learningspoons/favorite.html',
+                          context=dict(
+                              data_list=Product.objects.filter(id__in=FavoriteProducts.objects.filter(email=email).values_list('product_id', flat=True)).order_by('-id'),
+                              user_info=find_user,
+                              last_view_product_list=last_view_product_list
+                          ))
+        else:
+            return render(request, 'learningspoons/favorite.html')
