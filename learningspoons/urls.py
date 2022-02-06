@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path
 
 from content.views import Test, CreateReply, CreateLike, CancelLike, CreateProduct, ProductDetail, CartView, AddCart, \
-    PayCart, ClearCart, CreateReview
+    PayCart, ClearCart, CreateReview, ClearProduct
 from learningspoons import settings
 from learningspoons.views import Main, Search
 
-from user.views import Join, Login, KakaoLogin, KakaoCallBack, Logout, AddressView, AddAddress
+from user.views import Join, Login, KakaoLogin, KakaoCallBack, Logout, AddressView, AddAddress, PrimaryAddress
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,7 +46,9 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
     path('address/', AddressView.as_view(), name='address'),
     path('addaddress/', AddAddress.as_view(), name='addaddress'),
-    path('review/', CreateReview.as_view(), name='review')
+    path('review/', CreateReview.as_view(), name='review'),
+    path('primaryaddress/', PrimaryAddress.as_view(), name='primaryaddress'),
+    path('clearproduct/', ClearProduct.as_view(),name='clear_product'),
 
 ]
 
