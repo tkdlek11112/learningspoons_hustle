@@ -7,9 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview
+from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview, FavoriteProducts
 from learningspoons.settings import MEDIA_ROOT
-from user.models import User
+from user.models import User, Address
 
 
 class Test(APIView):
@@ -134,7 +134,7 @@ class CartView(APIView):
         cart_item_list = Cart.objects.filter(email=email)   # 로그인한 사용자의 장바구니 아이템 전부 가져오기
 
         data_list = []  # 빈 리스트 생성
-
+        cart_total_price = 0
         for cart_item in cart_item_list:
             # 사용자의 카트 아이템들을 하나씩 보면서 상품정보를 불러옴
             product = Product.objects.get(id=cart_item.product_id)
@@ -142,10 +142,14 @@ class CartView(APIView):
             # data_list에 하나씩 추가
             data_list.append(dict(
                 product=product,
-                count=cart_item.count
+                count=cart_item.count,
+                product_total_price = product.price*cart_item.count
             ))
+            cart_total_price= cart_total_price + product.price*cart_item.count
+        user_in_db = User.objects.filter(email=email).first()
+        address_list = Address.objects.filter(email=user_in_db)
 
-        return render(request, 'content/cart.html', context=dict(data_list=data_list))
+        return render(request, 'content/cart.html', context=dict(data_list=data_list, cart_total_price=cart_total_price, address_list=address_list))
 
 
 class PayCart(APIView):
@@ -198,3 +202,20 @@ class AddProductDetail(APIView):
         Product.objects.create(description=description, image=uuid_name, seller=seller, price=price, name=name)
 
         return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))
+
+class ClearProduct(APIView):
+    def post(self, request):
+        email = request.session.get('email')  # 세션에서 email값 가져오기
+        product_id = request.data.get('product_id')
+        Cart.objects.filter(email=email, product_id=product_id).delete()
+        return Response(status=200)
+
+
+class Favoriteproducts(APIView):
+    def post(self, request):
+        product_id = request.data.get('product_id')
+        email = request.session.get('email')  # 세션에서 email값 가져오기
+
+        FavoriteProducts.objects.create(product_id=product_id, email=email)
+
+        return Response(status=200)
