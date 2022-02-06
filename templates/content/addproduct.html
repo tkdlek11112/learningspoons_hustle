@@ -48,34 +48,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; width: 100%">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Hustle SHOP</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form action="{% url 'search' %}" method="post" class="d-flex">
-                {% csrf_token %}
-                <input class="form-control me-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-        <div style="display: flex; flex-direction: row">
-            <span class="material-icons-outlined" style="cursor: pointer" id="logout">logout</span>
-            <span class="material-icons">home</span>
-            <span class="material-icons">send</span>
-{#            <span class="material-icons-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"#}
-{#                  style="cursor: pointer">add_box</span>#}
-            <span class="material-icons-outlined">add_box</span>
-            <span class="material-icons-outlined">explore</span>
-            <span class="material-icons-outlined">favorite_border</span>
-            <a href="{% url 'cart' %}"><span class="material-icons-outlined" style="color: black">shopping_cart</span></a>
-            <div style="width: 25px;height: 25px;border-radius: 70%;overflow: hidden;">
-                <!-- 프로필 사진 이미지 들어가는곳 -->
-                <img style="width: 100%; height: 100%"
-                     src="{{ user_info.profile_image }}">
-            </div>
-        </div>
-    </div>
-</nav>
+{% include 'learningspoons/navbar.html' %}
 
 <div style="padding-top: 60px; font-size: 30px; font-weight: bold; margin-left: 10px">
     상품 등록하기

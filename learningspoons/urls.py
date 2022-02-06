@@ -57,7 +57,9 @@ urlpatterns = [
     path('addproductdetail/', AddProductDetail.as_view(), name='addproductdetail'),
     path('address/', AddressView.as_view(), name='address'),
     path('addaddress/', AddAddress.as_view(), name='addaddress'),
-
+    path('primaryaddress/', PrimaryAddress.as_view(), name='primaryaddress'),
+    path('clearproduct/', ClearProduct.as_view(),name='clear_product'),
+    path('favoriteproducts/',Favoriteproducts.as_view(),name='favoriteproducts' )
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,8 +20,8 @@ class Main(APIView):
                               last_view_product_list=last_view_product_list
                           ))
         else:
-            return render(request, 'learningspoons/main2.html')
-
+            return render(request, 'learningspoons/main2.html',
+                          context=dict(data_list=Product.objects.all().order_by('-id')))
 
 class Search(APIView):
     def post(self, request):

@@ -7,10 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-
 from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview, FavoriteProducts, History
-
 from learningspoons.settings import MEDIA_ROOT
 from user.models import User, Address
 
