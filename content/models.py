@@ -55,3 +55,11 @@ class FavoriteProducts(models.Model):
 
     class Meta:
         unique_together = ('email', 'product_id')
+
+class History(models.Model):
+    email = models.TextField()
+    datetime = models.DateTimeField()
+    product_id = models.IntegerField()
+    address = models.TextField()
+    count = models.IntegerField()
+

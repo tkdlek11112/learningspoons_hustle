@@ -144,11 +144,15 @@ remove_circle_outline</span>
     });
 
     $('#button_pay').click(function (){
+        const address = '{{address}}'
         $.ajax({
 
 
             url: {% url 'pay_cart' %},
             method: 'POST',
+            data: {
+                address: address
+            },
             success: function (data) {
                 alert('결제가 완료되었습니다.')
                 location.href = ''
