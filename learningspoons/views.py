@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from content.models import Feed, Reply, Like, Product, FavoriteProducts
+from content.models import Feed, Reply, Like, Product, FavoriteProducts, SearchHistory
 from user.models import User
 
 
@@ -31,6 +31,7 @@ class Search(APIView):
             keyword = request.data.get('keyword')
 
             last_view_product_list = Product.objects.filter(id__in=request.session.get('last_view_list', []))
+
 
             return render(request, 'learningspoons/main.html',
                           context=dict(
