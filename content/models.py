@@ -51,17 +51,18 @@ class ProductReview(models.Model):
     star = models.IntegerField(default=0)
 
 
+class History(models.Model):
+    email = models.TextField()
+    datetime = models.DateTimeField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    address = models.TextField()
+    count = models.IntegerField()
+
+
 class FavoriteProducts(models.Model):
     product_id = models.IntegerField()
     email = models.TextField()
 
     class Meta:
         unique_together = ('email', 'product_id')
-
-class History(models.Model):
-    email = models.TextField()
-    datetime = models.DateTimeField()
-    product_id = models.IntegerField()
-    address = models.TextField()
-    count = models.IntegerField()
 

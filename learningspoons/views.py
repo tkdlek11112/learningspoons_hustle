@@ -22,6 +22,7 @@ class Main(APIView):
                           is_login=is_login
                       ))
 
+
 class Search(APIView):
     def post(self, request):
         if request.session.get('login_check'):
