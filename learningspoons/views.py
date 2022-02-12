@@ -15,7 +15,7 @@ class Main(APIView):
 
             return render(request, 'learningspoons/main.html',
                           context=dict(
-                              data_list=Product.objects.all().order_by('-id'),
+                              data_list=Product.objects.all().order_by('count'),
                               user_info=find_user,
                               last_view_product_list=last_view_product_list
                           ))

@@ -67,6 +67,5 @@ class FavoriteProducts(models.Model):
         unique_together = ('email', 'product_id')
 
 class SearchHistory(models.Model):
-    email = models.TextField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     count = models.IntegerField()
