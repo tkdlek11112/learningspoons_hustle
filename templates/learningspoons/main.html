@@ -19,11 +19,6 @@
             href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
             rel="stylesheet">
 
-    <!-- 요거는 GA -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-            rel="stylesheet">
-
     <!-- 요거는 jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -48,7 +43,6 @@
 </head>
 <body>
 
-{% include 'learningspoons/floating.html' %}
 {% include 'learningspoons/navbar.html' %}
 
 
@@ -56,7 +50,7 @@
     {% for i in data_list %}
         <div style=" width: 400px; border: solid 1px black; margin: 10px">
             <!-- 여기에 상품 이미지 들어가는 곳 -->
-            <div>
+            <div style="width: 400px; height: 480px; object-fit: cover">
                 <a href="{% url 'product' pk=i.id%}">
                     <img style="width: 100%; height: 100%; object-fit: cover"
                          src="{% get_media_prefix %}{{ i.image }}">
@@ -74,203 +68,6 @@
 
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
-    $('#logout').click(function () {
-        $.ajax({
-            url: "{% url 'logout' %}",
-            method: "POST",
-            success: function () {
-                alert("로그아웃 되었습니다.")
-                location.reload(true);
-            },
-            error: function () {
-                alert("로그아웃에 실패했습니다.")
-        }
-        })
-    })
-
-    $('.favorite').click(function () {
-        // 내가 지금 favorite or favorite_border일까?
-
-        const email = '{{ user_info.email }}';
-        const feed_id = $(this).attr('feed_id');
-
-        if ($.trim($(this).html()) == 'favorite_border') {
-            // 테두리만 있는 하트 -> 색칠된 하트로 변할때 => 내가 좋아요 누름
-            $(this).html('favorite')
-
-            $.ajax({
-                url: "{% url 'like' %}",
-                method: "POST",
-                data: {
-                    email: email,
-                    feed_id: feed_id
-                },
-                success: function (data) {
-                    console.log("성공");
-                    alert("좋아요 성공");
-                },
-                error: function (request, status, error) {
-                    console.log("에러");
-                    alert("좋아요 실패");
-                },
-                complete: function () {
-                    console.log("무조건실행");
-                }
-            });
-
-        } else {
-            // 색칠된 하트 -> 테두리만 있는 하트로 변함 => 내가 좋아요 취소
-            $(this).html('favorite_border')
-
-            $.ajax({
-                url: "{% url 'cancellike' %}",
-                method: "POST",
-                data: {
-                    email: email,
-                    feed_id: feed_id
-                },
-                success: function (data) {
-                    console.log("성공");
-                    alert("좋아요취소 성공");
-                },
-                error: function (request, status, error) {
-                    console.log("에러");
-                    alert("좋아요취소 실패");
-                },
-                complete: function () {
-                    console.log("무조건실행");
-                }
-            });
-
-        }
-    });
-
-    $('.bookmark').click(function () {
-        // 내가 지금 favorite or favorite_border일까?
-        if ($.trim($(this).html()) == 'bookmark_border') {
-            $(this).html('bookmark')
-        } else {
-            $(this).html('bookmark_border')
-        }
-    });
-
-
-    $('.write_reply').click(function () {
-        alert($(this).attr('feed_id'));
-
-        const content = $(this).prev().val(); // 글내용
-        const nickname = "{{ user_info.nickname }}"; // 닉네임
-        const feed_id = $(this).attr('feed_id'); // 피드아이디
-
-        $.ajax({
-            url: "{% url 'reply' %}",
-            method: "POST",
-            data: {
-                content: content,
-                nickname: nickname,
-                feed_id: feed_id
-            },
-            success: function (data) {
-                console.log("성공");
-                alert("댓글 쓰기 성공");
-            },
-            error: function (request, status, error) {
-                console.log("에러");
-                alert("댓글 쓰기 실패");
-            },
-            complete: function () {
-                console.log("무조건실행");
-            }
-        });
-
-        $(this).parent().parent().prev().append('<div style="font-size: 12px"><b>' + nickname + '</b> ' + content + '</div>')
-        $(this).prev().val("");
-
-    });
-
-    $('#button_move').click(function () {
-        location.href = "{% url 'join' %}";
-    });
-
-
-    $('#button_save_change').click(function () {
-        const description = $('#input_content').val(); // 상품설명
-        const seller = "{{ user_info.nickname }}"; // 셀러
-        const price = $('#input_price').val();
-        ; // 가격
-        let fd = new FormData();
-
-        // 만약 파일을 올리지 않았으면 끝내라.
-        if (files == null)
-            return
-
-        fd.append('file', files[0]);
-        fd.append('description', description);
-        fd.append('seller', seller);
-        fd.append('price', price);
-        fd.append('csrfmiddlewaretoken', "{{ csrf_token }}")  // 403 에러 방지
-
-        $.ajax({
-            url: "{% url 'createproduct' %}",
-            method: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                console.log("성공");
-                location.href = '{% url 'main' %}'
-            },
-            error: function (request, status, error) {
-                console.log("에러");
-            },
-            complete: function () {
-                console.log("무조건실행");
-            }
-        });
-    });
-
-    $('#image_upload')
-        .on("dragover", dragOver)
-        .on("dragleave", dragOver)
-        .on("drop", drop);
-
-    function dragOver(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (e.type == "dragover") {
-            $(e.target).css({
-                "background-color": "black",
-                "outline-offset": "-20px"
-            });
-        } else {
-            $(e.target).css({
-                "background-color": "white",
-                "outline-offset": "-10px"
-            });
-        }
-    };
-
-    let files;
-
-    function drop(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        e.dataTransfer = e.originalEvent.dataTransfer;
-        files = e.dataTransfer.files;
-        console.log('업로드했슴!!' + files[0]);
-
-        if (files[0].type.match(/image.*/)) {
-            $('#image_upload').css({
-                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-                "outline": "none",
-                "background-size": "contain",
-                "background-repeat": "no-repeat",
-                "background-position": "center"
-            })
-        }
-    }
 
     $('#searchButton').click(function (){
         const keyword = $('#input_keyword').val();

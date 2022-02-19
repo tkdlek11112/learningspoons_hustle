@@ -2,26 +2,6 @@ from django.db import models
 
 
 # Create your models here.
-class Feed(models.Model):
-    content = models.TextField()
-    image = models.TextField()
-    profile_image = models.TextField()
-    nickname = models.TextField()
-
-
-class Reply(models.Model):
-    feed_id = models.IntegerField()
-    nickname = models.TextField()
-    content = models.TextField()
-
-
-class Like(models.Model):
-    feed_id = models.IntegerField()
-    email = models.TextField()
-
-    class Meta:
-        unique_together = ('feed_id', 'email',)
-
 
 class Product(models.Model):
     image = models.TextField()
@@ -39,10 +19,6 @@ class Cart(models.Model):
     class Meta:
         unique_together = ('email', 'product_id')
 
-class Review(models.Model):
-    review = models.TextField()
-    nickname = models.TextField()
-
 
 class ProductReview(models.Model):
     review = models.TextField()
@@ -50,19 +26,4 @@ class ProductReview(models.Model):
     product_id = models.IntegerField()
     star = models.IntegerField(default=0)
 
-
-class History(models.Model):
-    email = models.TextField()
-    datetime = models.DateTimeField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    address = models.TextField()
-    count = models.IntegerField()
-
-
-class FavoriteProducts(models.Model):
-    product_id = models.IntegerField()
-    email = models.TextField()
-
-    class Meta:
-        unique_together = ('email', 'product_id')
 

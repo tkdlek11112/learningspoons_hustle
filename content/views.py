@@ -7,9 +7,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from content.models import Feed, Reply, Like, Product, Cart, Review, ProductReview, FavoriteProducts, History
+from content.models import Product, Cart, ProductReview
 from learningspoons.settings import MEDIA_ROOT
-from user.models import User, Address
+from user.models import User
 
 
 class Test(APIView):
@@ -196,9 +196,11 @@ class CreateReview(APIView):
 
         return Response(status=200)
 
+
 class AddProduct(APIView):
     def get(self, request):
         return render(request, 'content/addproduct.html')
+
 
 class AddProductDetail(APIView):
     def post(self, request):
@@ -218,6 +220,7 @@ class AddProductDetail(APIView):
 
         return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))
 
+
 class ClearProduct(APIView):
     def post(self, request):
         email = request.session.get('email')  # 세션에서 email값 가져오기
@@ -228,34 +231,4 @@ class ClearProduct(APIView):
 
         return Response(status=200)
 
-class PaidHistory(APIView):
-    def get(self, request):
-        email = request.session.get('email')
-        paid_item_list = History.objects.filter(email=email)
-        # paid_item_list = 전체 결제 목록
 
-        paid_list=[]
-        paid_total_price = 0
-        for paid_item in paid_item_list:
-            # 사용자의 카트 아이템들을 하나씩 보면서 상품정보를 불러옴
-
-            # data_list에 하나씩 추가
-            paid_list.append(dict(
-                paid_item=paid_item,
-                product_total_price = paid_item.product.price*paid_item.count
-            ))
-
-
-        return render(request, 'content/history.html',
-                      context=dict(paid_list=paid_list))
-
-
-class Favoriteproducts(APIView):
-    def post(self, request):
-        product_id = request.data.get('product_id')
-        email = request.session.get('email')  # 세션에서 email값 가져오기
-        if FavoriteProducts.objects.filter(email=email, product_id=product_id).exists():
-            FavoriteProducts.objects.filter(email=email, product_id=product_id).delete()
-        else:
-            FavoriteProducts.objects.create(product_id=product_id, email=email)
-        return Response(status=200)

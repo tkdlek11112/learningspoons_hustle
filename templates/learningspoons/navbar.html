@@ -16,13 +16,26 @@
             {% else %}
                 <a href="{% url 'login' %}"><span class="material-icons-outlined" style="cursor: pointer; color: black" id="login">login</span></a>
             {% endif %}
-
             <a href="{% url 'main' %}" style="text-decoration: none; color: black"><span class="material-icons">home</span></a>
             <a href="{% url 'addproduct' %}"><span class="material-icons-outlined" style="color: black">add_box</span></a>
-
-            <a href="{% url 'favoritemain' %}" style="text-decoration: none; color: black"><span class="material-icons-outlined">favorite_border</span></a>
             <a href="{% url 'cart' %}" style="text-decoration: none; color: black"><span class="material-icons-outlined">shopping_cart</span></a>
-            <a href="{% url 'history' %}" style="text-decoration: none; color: black"><span class="material-icons-outlined">history_edu</span></a>
         </div>
     </div>
 </nav>
+
+
+<script>
+    $('#logout').click(function () {
+        $.ajax({
+            url: "{% url 'logout' %}",
+            method: "POST",
+            success: function () {
+                alert("로그아웃 되었습니다.")
+                location.reload(true);
+            },
+            error: function () {
+                alert("로그아웃에 실패했습니다.")
+        }
+        })
+    })
+</script>

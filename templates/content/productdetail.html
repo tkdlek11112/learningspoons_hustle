@@ -257,21 +257,6 @@
             })
         })
 
-    $('#add_favorite').click(function () {
-            $.ajax({
-                url: {% url 'favoriteproducts' %},
-                method: 'POST',
-                data: {
-                    product_id: {{ product.id }}
-                },
-                success: function (data) {
-                    location.href = '';
-                },
-                error: function (request, status, error) {
-                    alert('관심상품 수정 실패')
-                }
-            })
-        })
 </script>
 
 
