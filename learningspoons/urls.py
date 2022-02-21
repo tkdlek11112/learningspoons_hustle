@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 
-from content.views import Test, CreateProduct, ProductDetail, CartView, AddCart, \
+from content.views import CreateProduct, ProductDetail, CartView, AddCart, \
     PayCart, ClearCart, CreateReview, ClearProduct, AddProduct, AddProductDetail
 
 
@@ -32,7 +32,6 @@ urlpatterns = [
     # path('main/', Main.as_view()),
     path('', Main.as_view(), name='main'),
     path('search/', Search.as_view(), name='search'),
-    path('test', Test.as_view(), name='test'),
     path('join/', Join.as_view(), name='join'),
     path('login/', Login.as_view(), name='login'),
     path('kakaologin/', KakaoLogin.as_view(), name='kakaologin'),

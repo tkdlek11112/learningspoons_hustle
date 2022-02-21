@@ -73,7 +73,7 @@
         <div style="width: 30%; font-weight: bold; font-size: 20px">
             상품 상세설명
         </div>
-        <div class="mb-3">
+        <div>
             <textarea id="input_description" class="form-control" id="exampleFormControlTextarea1"
                       style="height: 200px; width: 600px"></textarea>
 
@@ -84,7 +84,7 @@
         <div style="width: 30%; font-weight: bold; font-size: 20px">
             가격
         </div>
-        <div class="mb-3">
+        <div>
             <input id="input_price" type="number" class="form-control" placeholder="0">
         </div>
     </div>
@@ -94,8 +94,6 @@
         <button type="button" class="btn btn-secondary" id="btn_cancel"> 취소 </button>
     </div>
 </div>
-
-
 
 
 <!-- Optional JavaScript; choose one of the two! -->
@@ -167,26 +165,6 @@
         }
     };
 
-
-
-    function drop(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        e.dataTransfer = e.originalEvent.dataTransfer;
-        files = e.dataTransfer.files;
-        console.log('업로드했슴!!' + files[0]);
-
-        if (files[0].type.match(/image.*/)) {
-            $('#image_upload').css({
-                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-                "outline": "none",
-                "background-size": "contain",
-                "background-repeat": "no-repeat",
-                "background-position": "center"
-            })
-        }
-    }
 
     $('#searchButton').click(function (){
         const keyword = $('#input_keyword').val();

@@ -12,70 +12,6 @@ from learningspoons.settings import MEDIA_ROOT
 from user.models import User
 
 
-class Test(APIView):
-    def get(self, request):
-        return Response(status=200, data=dict(message="GET으로 API를 호출했습니다."))
-
-    def post(self, request):
-        print("POST 요청이 들어옴")
-
-        file = request.FILES['file']  # 인풋에서 파일 가져오기
-        client_content = request.data.get('content')  # 인풋에서 글 내용 가져오기
-        profile_image = request.data.get('profile_image')  # 인풋에서 프로필 이미지 가져오기
-        nickname = request.data.get('nickname')  # 인풋에서 닉네임 가져오기
-        print(file, client_content, profile_image, nickname)  # 출력
-
-        uuid_name = uuid4().hex
-        save_path = os.path.join(MEDIA_ROOT, uuid_name)
-        with open(save_path, 'wb+') as destination:
-            for chunk in file.chunks():
-                destination.write(chunk)
-
-        Feed.objects.create(content=client_content, image=uuid_name, profile_image=profile_image, nickname=nickname)
-
-        return Response(status=200, data=dict(message="POST로 API를 호출했습니다."))
-
-
-class CreateReply(APIView):
-    def post(self, request):
-        print("POST 요청이 들어옴")
-
-        feed_id = request.data.get('feed_id')  # 인풋에서 글 내용 가져오기
-        content = request.data.get('content')  # 인풋에서 프로필 이미지 가져오기
-        nickname = request.data.get('nickname')  # 인풋에서 닉네임 가져오기
-
-        Reply.objects.create(content=content, feed_id=feed_id, nickname=nickname)
-
-        return Response(status=200, data=dict(message="댓글 쓰기 성공"))
-
-
-class CreateLike(APIView):
-    def post(self, request):
-        print("POST 요청이 들어옴")
-
-        feed_id = request.data.get('feed_id')  # 인풋에서 글 내용 가져오기
-        email = request.data.get('email')  # 인풋에서 닉네임 가져오기
-
-        Like.objects.create(feed_id=feed_id, email=email)
-
-        return Response(status=200, data=dict(message="좋아요 성공"))
-
-
-class CancelLike(APIView):
-    def post(self, request):
-        print("POST 요청이 들어옴")
-
-        feed_id = request.data.get('feed_id')  # 인풋에서 글 내용 가져오기
-        email = request.data.get('email')  # 인풋에서 닉네임 가져오기
-
-        find_like = Like.objects.filter(feed_id=feed_id, email=email).first()
-        # 좋아요1
-
-        find_like.delete()
-
-        return Response(status=200, data=dict(message="좋아요취소 성공"))
-
-
 class CreateProduct(APIView):
     def post(self, request):
         file = request.FILES['file']  # 인풋에서 파일 가져오기
@@ -107,10 +43,9 @@ class ProductDetail(APIView):
         last_view_list.append(pk)   # 2. 지금 조회한 상품의 번호를 최근 본 리스트에 추가함
         request.session['last_view_list'] = last_view_list  # 3. 최근 본 리스트를 세션에 저장 (업데이트)
         is_login = request.session.get('login_check', False)
-        is_favorite = FavoriteProducts.objects.filter(email=email, product_id=pk).exists()
 
         return render(request, 'content/productdetail.html',
-                      context=dict(product=product, user_info=find_user, reviews=reviews, is_favorite=is_favorite, is_login=is_login))
+                      context=dict(product=product, user_info=find_user, reviews=reviews, is_login=is_login))
 
 
 class AddCart(APIView):
@@ -150,26 +85,13 @@ class CartView(APIView):
             ))
             cart_total_price= cart_total_price + product.price*cart_item.count
         user_in_db = User.objects.filter(email=email).first()
-        address_list = Address.objects.filter(email=user_in_db)
 
-        return render(request, 'content/cart.html', context=dict(data_list=data_list, cart_total_price=cart_total_price, address_list=address_list))
+        return render(request, 'content/cart.html', context=dict(data_list=data_list, cart_total_price=cart_total_price))
 
 
 class PayCart(APIView):
     def post(self, request):
-        email = request.session.get('email')    # 세션에서 email값 가져오기
-        dt = datetime.datetime.now()
-        address = request.data.get('address')
-        cart_item_list = Cart.objects.filter(email=email)   # 로그인한 사용자의 장바구니 아이템 전부 가져오기
-
-
-        for cart_item in cart_item_list:
-            # 사용자의 카트 아이템들을 하나씩 보면서 상품정보를 불러옴
-            product = Product.objects.get(id=cart_item.product_id)
-            History.objects.create(email=email, datetime=dt, product_id=product.id, address=address, count=cart_item.count)
-            # data_list에 하나씩 추가
-
-
+        email = request.session.get('email')  # 세션에서 email값 가져오기
 
         Cart.objects.filter(email=email).delete()   # 사용자의 카트 데이터 전체 지우기
 
